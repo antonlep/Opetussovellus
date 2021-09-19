@@ -8,6 +8,16 @@ def user_id():
 def is_admin():
     return session.get("admin", 'false')
 
+def check(username):
+    print("test")
+    sql = "SELECT id FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchone()
+    if user:
+        return True
+    else:
+        return False
+
 def login(username, password):
     sql = "SELECT id, password, admin FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
@@ -22,9 +32,12 @@ def login(username, password):
         else:
             return False
 
-def register(username, password):
+def register(username, password, teacher):
     hash_value = generate_password_hash(password)
-    admin = 'false'
+    if teacher == ['1']:
+        admin = 'true'
+    else:
+        admin='false'
     try:
         sql = "INSERT INTO users (username, password, admin) VALUES (:username, :password, :admin)"
         db.session.execute(sql, {"username":username, "password":hash_value, "admin":admin})

@@ -7,7 +7,7 @@ CREATE TABLE Users (
 
 CREATE TABLE Courses (
     id SERIAL PRIMARY KEY,
-    name TEXT UNIQUE
+    name TEXT
 );
 
 CREATE TABLE TextMaterial (
