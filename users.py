@@ -6,7 +6,7 @@ def user_id():
     return session.get("user_id", 0)
 
 def is_admin():
-    return session.get("admin", 0)
+    return session.get("admin", 'false')
 
 def login(username, password):
     sql = "SELECT id, password, admin FROM users WHERE username=:username"
@@ -24,7 +24,7 @@ def login(username, password):
 
 def register(username, password):
     hash_value = generate_password_hash(password)
-    admin = 0
+    admin = 'false'
     try:
         sql = "INSERT INTO users (username, password, admin) VALUES (:username, :password, :admin)"
         db.session.execute(sql, {"username":username, "password":hash_value, "admin":admin})
