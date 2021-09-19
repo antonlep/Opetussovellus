@@ -1,0 +1,6 @@
+<title>{{ course.name }}</title>
+<h1>{{ course.name }}</h1>
+{% if session.admin %}
+<a href="/delete_course">Poista kurssi</a>
+{% endif %}
+<a href="/">Takaisin</a>

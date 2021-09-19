@@ -9,7 +9,11 @@ Tervetuloa!
 {% endif %}
 <hr>
 {% for course in courses %}
+{% if session.user_id %} 
+<a href="/courses/{{ course.id }}">{{ course.name }}</a>
+{% else %}
 {{ course.name }}
+{% endif %}
 <hr>
 {% endfor %}
 {% if session.admin %}

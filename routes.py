@@ -4,8 +4,19 @@ import users, courses
 
 @app.route("/")
 def index():
-    course_names = courses.get_courses()
-    return render_template("index.html", courses=course_names)
+    course_list = courses.get_courses()
+    visible_course_list = [c for c in course_list if c.visible == True]
+    print(course_list)
+    print(visible_course_list)
+    return render_template("index.html", courses=visible_course_list)
+
+@app.route("/courses/<int:id>")
+def course_pages(id):
+    course = courses.get_course(id)
+    if course:
+        return render_template("course.html", course=course)
+    else:
+        return render_template("error.html", message="Kurssia ei löydy")
 
 @app.route("/login", methods=["GET","POST"])
 def login():
@@ -42,6 +53,13 @@ def register():
 def add_course():
     course_name = request.form["course_name"]
     if courses.add_course(course_name):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Kurssin lisääminen ei onnistu")
+
+@app.route("/delete_course")
+def delete_course():
+    if courses.delete_course(session["course_id"]):
         return redirect("/")
     else:
         return render_template("error.html", message="Kurssin lisääminen ei onnistu")
