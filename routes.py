@@ -6,8 +6,6 @@ import users, courses
 def index():
     course_list = courses.get_courses()
     visible_course_list = [c for c in course_list if c.visible == True]
-    print(course_list)
-    print(visible_course_list)
     return render_template("index.html", courses=visible_course_list)
 
 @app.route("/courses/<int:id>")
