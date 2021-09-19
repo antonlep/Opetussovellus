@@ -7,3 +7,17 @@ Tervetuloa!
 <a href="/login">Kirjaudu sisään</a>
 <a href="/register">Rekisteröidy</a>
 {% endif %}
+<hr>
+{% for course in courses %}
+{{ course.name }}
+<hr>
+{% endfor %}
+{% if session.admin %}
+Lisää kurssi:
+<p>
+<form action="/add_course" method="post">
+Kurssin nimi: <input type="text" name="course_name">
+<p>
+<input type="submit" value="Lisää">
+</form>
+{% endif %}

@@ -9,7 +9,6 @@ def is_admin():
     return session.get("admin", 'false')
 
 def check(username):
-    print("test")
     sql = "SELECT id FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()

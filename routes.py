@@ -1,10 +1,11 @@
 from app import app
 from flask import redirect, render_template, request, session
-import users
+import users, courses
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    course_names = courses.get_courses()
+    return render_template("index.html", courses=course_names)
 
 @app.route("/login", methods=["GET","POST"])
 def login():
@@ -36,7 +37,14 @@ def register():
             return redirect("/")
         else:
             return render_template("error.html", message="Rekisteröinti ei onnistunut")
-    
+
+@app.route("/add_course", methods=["POST"])
+def add_course():
+    course_name = request.form["course_name"]
+    if courses.add_course(course_name):
+        return redirect("/")
+    else:
+        return render_template("error.html", message="Kurssin lisääminen ei onnistu")
 
 @app.route("/logout")
 def logout():

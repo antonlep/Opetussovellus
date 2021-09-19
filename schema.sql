@@ -7,7 +7,8 @@ CREATE TABLE Users (
 
 CREATE TABLE Courses (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT,
+    visible BOOLEAN
 );
 
 CREATE TABLE TextMaterial (
