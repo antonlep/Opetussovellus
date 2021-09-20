@@ -14,8 +14,7 @@ CREATE TABLE Courses (
 CREATE TABLE TextMaterials (
     id SERIAL PRIMARY KEY,
     course_id INTEGER REFERENCES Courses,
-    textmaterial TEXT,
-    time TIMESTAMP
+    textmaterial TEXT
 );
 
 CREATE TABLE CourseUsers (
@@ -27,8 +26,8 @@ CREATE TABLE CourseUsers (
 CREATE TABLE TextQuestions (
     id SERIAL PRIMARY KEY,
     course_id INTEGER REFERENCES Courses,
-    name TEXT,
-    content TEXT
+    question TEXT,
+    visible BOOLEAN
 );
 
 CREATE TABLE TextAnswers (

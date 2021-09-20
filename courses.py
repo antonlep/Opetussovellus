@@ -2,14 +2,11 @@ from db import db
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-def get_courses():
-    sql = "SELECT id, name, visible FROM courses"
+def get_active_courses():
+    sql = "SELECT id, name, visible FROM courses WHERE visible = true"
     result = db.session.execute(sql)
     courses = result.fetchall()
-    if courses:
-        return courses 
-    else:
-        return []
+    return courses 
 
 def get_course(id):
     sql = "SELECT id, name, visible FROM courses WHERE id=:id"
@@ -43,7 +40,7 @@ def delete_course(id):
 
 def add_textmaterial(course_id, textmaterial):
     try:
-        sql = "INSERT INTO textmaterials (course_id, textmaterial, time) VALUES (:course_id, :textmaterial, NOW())"
+        sql = "INSERT INTO textmaterials (course_id, textmaterial) VALUES (:course_id, :textmaterial)"
         db.session.execute(sql, {"course_id":course_id, "textmaterial":textmaterial})
         db.session.commit()
     except:
@@ -51,12 +48,16 @@ def add_textmaterial(course_id, textmaterial):
     return True
 
 def get_latest_textmaterial(course_id):
-    sql = "SELECT textmaterial FROM textmaterials WHERE course_id=:course_id ORDER BY time DESC"
+    sql = "SELECT textmaterial FROM textmaterials WHERE course_id=:course_id ORDER BY id DESC"
     result = db.session.execute(sql, {"course_id":course_id})
     material = result.fetchone()
-    if material:
-        return material
-    else:
-        return ""
+    return material
+
+
+def get_active_textquestions(course_id):
+    sql = "SELECT question FROM textquestions WHERE course_id=:course_id AND visible=true "
+    result = db.session.execute(sql, {"course_id":course_id})
+    questions = result.fetchall()
+    return questions
 
 

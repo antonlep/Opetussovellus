@@ -10,4 +10,9 @@ Kurssimateriaali: <input type="text" name="textmaterial">
 </form>
 <a href="/delete_course">Poista kurssi</a>
 {% endif %}
+<p>
+{% for textquestion in textquestions%}
+{{ textquestion.question}}
+<p>
+{% endfor %}
 <a href="/">Takaisin</a>

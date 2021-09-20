@@ -4,16 +4,17 @@ import users, courses
 
 @app.route("/")
 def index():
-    course_list = courses.get_courses()
-    visible_course_list = [c for c in course_list if c.visible == True]
-    return render_template("index.html", courses=visible_course_list)
+    course_list = courses.get_active_courses()
+    return render_template("index.html", courses=course_list)
 
 @app.route("/courses/<int:id>")
 def course_pages(id):
     course = courses.get_course(id)
     textmaterial = courses.get_latest_textmaterial(id)
+    textquestions = courses.get_active_textquestions(id)
+    print(textquestions)
     if course:
-        return render_template("course.html", course=course, textmaterial=textmaterial)
+        return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions)
     else:
         return render_template("error.html", message="Kurssia ei löydy")
 
