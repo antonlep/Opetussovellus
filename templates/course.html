@@ -1,6 +1,13 @@
 <title>{{ course.name }}</title>
 <h1>{{ course.name }}</h1>
+{{ textmaterial.textmaterial }}
+<hr>
 {% if session.admin %}
+<form action="/add_textmaterial" method="post">
+Kurssimateriaali: <input type="text" name="textmaterial">
+<p>
+<input type="submit" value="Tallenna">
+</form>
 <a href="/delete_course">Poista kurssi</a>
 {% endif %}
 <a href="/">Takaisin</a>

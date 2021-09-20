@@ -41,3 +41,22 @@ def delete_course(id):
     del session["course_id"]
     return True
 
+def add_textmaterial(course_id, textmaterial):
+    try:
+        sql = "INSERT INTO textmaterials (course_id, textmaterial, time) VALUES (:course_id, :textmaterial, NOW())"
+        db.session.execute(sql, {"course_id":course_id, "textmaterial":textmaterial})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def get_latest_textmaterial(course_id):
+    sql = "SELECT textmaterial FROM textmaterials WHERE course_id=:course_id ORDER BY time DESC"
+    result = db.session.execute(sql, {"course_id":course_id})
+    material = result.fetchone()
+    if material:
+        return material
+    else:
+        return ""
+
+

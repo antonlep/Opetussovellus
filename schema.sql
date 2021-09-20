@@ -11,9 +11,11 @@ CREATE TABLE Courses (
     visible BOOLEAN
 );
 
-CREATE TABLE TextMaterial (
+CREATE TABLE TextMaterials (
     id SERIAL PRIMARY KEY,
-    course_id INTEGER REFERENCES Courses
+    course_id INTEGER REFERENCES Courses,
+    textmaterial TEXT,
+    time TIMESTAMP
 );
 
 CREATE TABLE CourseUsers (

@@ -11,8 +11,9 @@ def index():
 @app.route("/courses/<int:id>")
 def course_pages(id):
     course = courses.get_course(id)
+    textmaterial = courses.get_latest_textmaterial(id)
     if course:
-        return render_template("course.html", course=course)
+        return render_template("course.html", course=course, textmaterial=textmaterial)
     else:
         return render_template("error.html", message="Kurssia ei löydy")
 
@@ -61,6 +62,15 @@ def delete_course():
         return redirect("/")
     else:
         return render_template("error.html", message="Kurssin lisääminen ei onnistu")
+
+@app.route("/add_textmaterial", methods=["POST"])
+def add_textmaterial():
+    textmaterial = request.form["textmaterial"]
+    course_id = session["course_id"]
+    if courses.add_textmaterial(course_id, textmaterial):
+        return redirect(f"/courses/{course_id}")
+    else:
+        return render_template("error.html", message="Materiaalin lisääminen ei onnistu")
 
 @app.route("/logout")
 def logout():
