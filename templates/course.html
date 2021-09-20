@@ -1,5 +1,9 @@
 <title>{{ course.name }}</title>
 <h1>{{ course.name }}</h1>
+{% if session.admin %}
+<a href="/delete_course">Poista kurssi</a>
+{% endif %}
+<hr>
 {{ textmaterial.textmaterial }}
 <hr>
 {% if session.admin %}
@@ -8,11 +12,26 @@ Kurssimateriaali: <input type="text" name="textmaterial">
 <p>
 <input type="submit" value="Tallenna">
 </form>
-<a href="/delete_course">Poista kurssi</a>
 {% endif %}
 <p>
+<p>
+<p>
 {% for textquestion in textquestions%}
+{% if session.admin %}
 {{ textquestion.question}}
+<form action="/delete_textquestion" method="post">
+<button type="submit" name="question_id" value="{{ textquestion.id }}">Poista</button>
+</form>
+{% else %}
+{{ textquestion.question}}
+{% endif %}
 <p>
 {% endfor %}
+{% if session.admin %}
+<form action="/add_textquestion" method="post">
+Lisää kysymys: <input type="text" name="textquestion">
+<p>
+<input type="submit" value="Tallenna">
+</form>
+{% endif %}
 <a href="/">Takaisin</a>

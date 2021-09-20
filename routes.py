@@ -12,7 +12,6 @@ def course_pages(id):
     course = courses.get_course(id)
     textmaterial = courses.get_latest_textmaterial(id)
     textquestions = courses.get_active_textquestions(id)
-    print(textquestions)
     if course:
         return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions)
     else:
@@ -72,6 +71,25 @@ def add_textmaterial():
         return redirect(f"/courses/{course_id}")
     else:
         return render_template("error.html", message="Materiaalin lisääminen ei onnistu")
+
+@app.route("/add_textquestion", methods=["POST"])
+def add_textquestion():
+    textquestion = request.form["textquestion"]
+    course_id = session["course_id"]
+    if courses.add_textquestion(course_id, textquestion):
+        return redirect(f"/courses/{course_id}")
+    else:
+        return render_template("error.html", message="Kysymyksen lisääminen ei onnistu")
+
+@app.route("/delete_textquestion", methods=["POST"])
+def delete_textquestion():
+    course_id = session["course_id"]
+    question_id = request.form["question_id"]
+    print(course_id, question_id)
+    if courses.delete_textquestion(question_id):
+        return redirect(f"/courses/{course_id}")
+    else:
+        return render_template("error.html", message="Kysymyksen poistaminen ei onnistu")
 
 @app.route("/logout")
 def logout():
