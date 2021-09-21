@@ -28,15 +28,18 @@ Kurssimateriaali: <input type="text" name="textmaterial">
 <input type="text" name="textanswer">
 <button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
 </form>
-{% endif %}
 <p>
+{% endif %}
 {% endfor %}
+<p>
 {% if session.admin %}
 <form action="/add_textquestion" method="post">
-Lisää kysymys: <input type="text" name="textquestion">
-Lisää vastaus: <input type="text" name="textanswer">
+Uusi kysymys: <input type="text" name="textquestion">
+Oikea vastaus: <input type="text" name="textanswer">
 <p>
 <input type="submit" value="Tallenna">
 </form>
+{% else %}
+Pisteet: {{ points[0] }}/{{ points[1] }}
 {% endif %}
 <a href="/">Takaisin</a>

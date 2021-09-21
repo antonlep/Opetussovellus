@@ -13,9 +13,10 @@ def course_pages(id):
     course = courses.get_course(id)
     textmaterial = courses.get_latest_textmaterial(id)
     textquestions = questions.get_active_textquestions(id)
-    textanswers = questions.get_textanswers(id, user_id)
+    answers = questions.get_correct_answers(id, user_id)
+    points = [answers, len(textquestions)]
     if course:
-        return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions)
+        return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions, points=points)
     else:
         return render_template("error.html", message="Kurssia ei löydy")
 

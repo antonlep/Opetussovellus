@@ -7,13 +7,13 @@ def get_active_textquestions(course_id):
     questions = result.fetchall()
     return questions
 
-def get_textanswers(course_id, user_id):
-    sql = """SELECT id, question_id, answer FROM textanswers WHERE id IN
-            (SELECT MAX(B.id) FROM textquestions A LEFT JOIN textanswers B ON A.id = B.question_id WHERE A.course_id=:course_id GROUP BY B.question_id)
-            AND user_id=:user_id;"""
+def get_correct_answers(course_id, user_id):
+    sql = """SELECT COUNT(*) FROM textquestions C LEFT JOIN textanswers D
+            on C.id = D.question_id WHERE D.id IN (SELECT MAX(B.id) FROM textquestions A LEFT JOIN textanswers B
+            ON A.id = B.question_id WHERE A.course_id=:course_id GROUP BY B.question_id) AND user_id=:user_id AND C.answer = D.answer"""
     result = db.session.execute(sql, {"course_id":course_id, "user_id":user_id})
-    questions = result.fetchall()
-    return questions
+    correct_answers = result.fetchone()[0]
+    return correct_answers
 
 def add_textquestion(course_id, question, answer):
     visible = 'true'
