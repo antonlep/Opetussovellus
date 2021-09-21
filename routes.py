@@ -14,7 +14,6 @@ def course_pages(id):
     textmaterial = courses.get_latest_textmaterial(id)
     textquestions = questions.get_active_textquestions(id)
     textanswers = questions.get_textanswers(id, user_id)
-    print(checked_questions)
     if course:
         return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions)
     else:
