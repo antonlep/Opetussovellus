@@ -1,6 +1,6 @@
 from app import app
 from flask import redirect, render_template, request, session
-import users, courses
+import users, courses, questions
 
 @app.route("/")
 def index():
@@ -9,9 +9,12 @@ def index():
 
 @app.route("/courses/<int:id>")
 def course_pages(id):
+    user_id = session["user_id"]
     course = courses.get_course(id)
     textmaterial = courses.get_latest_textmaterial(id)
-    textquestions = courses.get_active_textquestions(id)
+    textquestions = questions.get_active_textquestions(id)
+    textanswers = questions.get_textanswers(id, user_id)
+    print(checked_questions)
     if course:
         return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions)
     else:
@@ -38,7 +41,6 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         teacher = request.form.getlist("teacher")
-        print(teacher)
         if password1 != password2:
             return render_template("error.html", message="Salasanat eroavat")
         if users.check(username):
@@ -75,8 +77,9 @@ def add_textmaterial():
 @app.route("/add_textquestion", methods=["POST"])
 def add_textquestion():
     textquestion = request.form["textquestion"]
+    textanswer = request.form["textanswer"]
     course_id = session["course_id"]
-    if courses.add_textquestion(course_id, textquestion):
+    if questions.add_textquestion(course_id, textquestion, textanswer):
         return redirect(f"/courses/{course_id}")
     else:
         return render_template("error.html", message="Kysymyksen lisääminen ei onnistu")
@@ -85,11 +88,21 @@ def add_textquestion():
 def delete_textquestion():
     course_id = session["course_id"]
     question_id = request.form["question_id"]
-    print(course_id, question_id)
-    if courses.delete_textquestion(question_id):
+    if questions.delete_textquestion(question_id):
         return redirect(f"/courses/{course_id}")
     else:
         return render_template("error.html", message="Kysymyksen poistaminen ei onnistu")
+
+@app.route("/answer_textquestion", methods=["POST"])
+def answer_textquestion():
+    course_id = session["course_id"]
+    user_id = session["user_id"]
+    question_id = request.form["question_id"]
+    answer = request.form["textanswer"]
+    if questions.add_textanswer(user_id, question_id, answer):
+        return redirect(f"/courses/{course_id}")
+    else:
+        return render_template("error.html", message="Vastaaminen ei onnistu")
 
 @app.route("/logout")
 def logout():

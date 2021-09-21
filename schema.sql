@@ -27,12 +27,12 @@ CREATE TABLE TextQuestions (
     id SERIAL PRIMARY KEY,
     course_id INTEGER REFERENCES Courses,
     question TEXT,
+    answer TEXT,
     visible BOOLEAN
 );
 
 CREATE TABLE TextAnswers (
     id SERIAL PRIMARY KEY,
-    course_id INTEGER REFERENCES Courses,
     user_id INTEGER REFERENCES Users,
     question_id INTEGER REFERENCES TextQuestions,
     answer TEXT,
