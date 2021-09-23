@@ -1,7 +1,8 @@
 Tervetuloa!
 <p>
 {% if session.user_id %} 
-<p>Olet kirjautunut sisään.</p>
+<p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
+<a href="/statistics">Pistetaulukko</a>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>
@@ -25,3 +26,4 @@ Kurssin nimi: <input type="text" name="course_name">
 <input type="submit" value="Lisää">
 </form>
 {% endif %}
+<p>

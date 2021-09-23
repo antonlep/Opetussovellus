@@ -18,7 +18,7 @@ Kurssimateriaali: <input type="text" name="textmaterial">
 <p>
 {% for textquestion in textquestions%}
 {% if session.admin %}
-{{ textquestion.question}}
+{{ textquestion.question}} {{ textquestion.answer}}
 <form action="/delete_textquestion" method="post">
 <button type="submit" name="question_id" value="{{ textquestion.id }}">Poista</button>
 </form>

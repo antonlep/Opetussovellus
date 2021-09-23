@@ -27,6 +27,7 @@ def login(username, password):
         if check_password_hash(user.password, password):
             session["user_id"] = user.id
             session["admin"] = user.admin
+            session["username"] = username
             return True
         else:
             return False
@@ -48,4 +49,5 @@ def register(username, password, teacher):
 def logout():
     del session["user_id"]
     del session["admin"]
+    del session["username"]
 

@@ -7,6 +7,12 @@ def get_active_textquestions(course_id):
     questions = result.fetchall()
     return questions
 
+def get_active_courses():
+    sql = "SELECT id, name FROM courses WHERE visible = true "
+    result = db.session.execute(sql)
+    courses = result.fetchall()
+    return courses
+
 def get_correct_answers(course_id, user_id):
     sql = """SELECT COUNT(*) FROM textquestions C LEFT JOIN textanswers D
             on C.id = D.question_id WHERE D.id IN (SELECT MAX(B.id) FROM textquestions A LEFT JOIN textanswers B
@@ -14,6 +20,32 @@ def get_correct_answers(course_id, user_id):
     result = db.session.execute(sql, {"course_id":course_id, "user_id":user_id})
     correct_answers = result.fetchone()[0]
     return correct_answers
+
+def get_number_of_questions_by_course():
+    sql = """SELECT Q.id, Q.name, COUNT(*) FROM courses Q LEFT JOIN textquestions Z ON Q.id = Z.course_id WHERE Q.visible = true AND
+            COALESCE(Z.visible, true) = true GROUP BY Q.id"""
+    result = db.session.execute(sql)
+    questions = result.fetchall()
+    return questions
+
+def get_number_of_points_by_course(user_id):
+    sql = """SELECT Q.id, Q.name, COALESCE(X.count,0) sum FROM courses Q LEFT JOIN (SELECT A.id, A.name, COUNT(*) FROM courses A 
+            LEFT JOIN textquestions B ON A.id = B.course_id WHERE B.id IN (SELECT B.id FROM textquestions B 
+            LEFT JOIN textanswers C ON B.id = C.question_id WHERE B.visible = true AND user_id = :user_id AND B.answer = C.answer GROUP BY B.id)
+            GROUP BY A.id) X ON Q.id = X.id WHERE Q.visible = true"""
+    result = db.session.execute(sql, {"user_id":user_id})
+    answers = result.fetchall()
+    return answers
+
+def get_statistics_by_course(user_id):
+    sql = """SELECT Q.id, Q.name, MAX(COALESCE(X.count,0)) correct, COUNT(Z.id) questions FROM courses Q LEFT JOIN (SELECT A.id, A.name, COUNT(*) FROM courses A
+            LEFT JOIN textquestions B ON A.id = B.course_id WHERE B.id IN (SELECT B.id FROM textquestions B
+            LEFT JOIN textanswers C ON B.id = C.question_id WHERE B.visible = true AND user_id = :user_id AND B.answer = C.answer GROUP BY B.id)
+            GROUP BY A.id) X ON Q.id = X.id LEFT JOIN textquestions Z ON Q.id = Z.course_id WHERE Q.visible = true AND COALESCE(Z.visible, true) = true
+            GROUP BY Q.id"""
+    result = db.session.execute(sql, {"user_id":user_id})
+    answers = result.fetchall()
+    return answers
 
 def add_textquestion(course_id, question, answer):
     visible = 'true'

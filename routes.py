@@ -104,6 +104,12 @@ def answer_textquestion():
     else:
         return render_template("error.html", message="Vastaaminen ei onnistu")
 
+@app.route("/statistics")
+def statistics():
+    user_id = session["user_id"]
+    courses = questions.get_statistics_by_course(user_id)
+    return render_template("statistics.html", courses = courses)
+
 @app.route("/logout")
 def logout():
     users.logout()
