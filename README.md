@@ -7,13 +7,13 @@ Sovelluksen rakenne:
 Etusivu:
 
 Lista kursseista\
-Kirjautuneena käyttäjänä voi klikata kursssille sisään\
+Kirjautuneena käyttäjänä voi klikata kursssille sisään
 
 
 Rekisteröityminen:
 
 Käyttäjä voi rekisteröityä opettajana, joka antaa ylläpitäjän oikeudet\
-Oletuksena rekisteröityminen tapahtuu oppilaana\
+Oletuksena rekisteröityminen tapahtuu oppilaana
 
 
 Kurssisivut:
@@ -25,12 +25,12 @@ Kysymysten alla näkyy pistetilanne\
 Kurssille voi liittyä tai poistua mutta se ei tällä hetkellä tee mitään\
 Opettaja voi lisätä kurssimateriaalia kirjoittamalla uusi materiaali kenttään ja tallentamalla\
 Opettaja voi lisätä ja poistaa kysymyksiä\
-Opettaja voi poistaa kurssin\
+Opettaja voi poistaa kurssin
 
 
 Pistetaulukko:
 
-Lista kursseista ja pisteistä\
+Lista kursseista ja pisteistä
 
 
 Puuttuvia asioita:
@@ -39,4 +39,4 @@ Monivalintakysymykset ja vastaukset\
 Opettajalle mahdollisuus nähdä kurssille liittyneet opiskelijat ja pisteet\
 Moneen kysymykseen vastaaminen samalla kertaa\
 Tekstimateriaalin suoraviivaisempi muokkaaminen\
-Käyttöjärjestelmän ulkoasun viimeistely\
+Käyttöjärjestelmän ulkoasun viimeistely
