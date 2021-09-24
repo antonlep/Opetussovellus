@@ -18,8 +18,6 @@ Kurssimateriaali: <input type="text" name="textmaterial">
 </form>
 {% endif %}
 <p>
-<h3>Kysymykset ja vastaukset</h3>
-<p>
 {% for textquestion in textquestions%}
 {% if session.admin %}
 <b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}
@@ -48,4 +46,5 @@ Oikea vastaus: <input type="text" name="textanswer">
 {% else %}
 {{ course_stats.correct }}/{{ course_stats.questions }}
 {% endif %}
+<p>
 <a href="/">Takaisin</a>
