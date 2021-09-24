@@ -37,6 +37,33 @@ def delete_course(id):
     del session["course_id"]
     return True
 
+def check_if_user_in_course(user_id, course_id):
+    sql = "SELECT id FROM courseusers WHERE user_id=:user_id AND course_id=:course_id"
+    result = db.session.execute(sql, {"user_id":user_id, "course_id":course_id})
+    r = result.fetchone()
+    if r:
+        return True
+    return False
+
+def add_user_to_course(user_id, course_id):
+    try:
+        sql = "INSERT INTO courseusers (user_id, course_id) VALUES (:user_id, :course_id) ON CONFLICT DO NOTHING"
+        db.session.execute(sql, {"user_id":user_id, "course_id":course_id})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def remove_user_from_course(user_id, course_id):
+    print(course_id, user_id)
+    try:
+        sql = "DELETE FROM courseusers WHERE course_id=:course_id AND user_id=:user_id"
+        db.session.execute(sql, {"user_id":user_id, "course_id":course_id})
+        db.session.commit()
+    except:
+        return False
+    return True
+
 def add_textmaterial(course_id, textmaterial):
     try:
         sql = "INSERT INTO textmaterials (course_id, textmaterial) VALUES (:course_id, :textmaterial)"
@@ -51,7 +78,3 @@ def get_latest_textmaterial(course_id):
     result = db.session.execute(sql, {"course_id":course_id})
     material = result.fetchone()
     return material
-
-
-
-

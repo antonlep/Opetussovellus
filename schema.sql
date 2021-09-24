@@ -20,7 +20,8 @@ CREATE TABLE TextMaterials (
 CREATE TABLE CourseUsers (
     id SERIAL PRIMARY KEY,
     course_id INTEGER REFERENCES Courses,
-    user_id INTEGER REFERENCES Users
+    user_id INTEGER REFERENCES Users,
+    UNIQUE (course_id, user_id)
 );
 
 CREATE TABLE TextQuestions (

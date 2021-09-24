@@ -11,13 +11,33 @@ def index():
 def course_pages(id):
     user_id = session["user_id"]
     course = courses.get_course(id)
+    user_in_course = courses.check_if_user_in_course(user_id, id)
     textmaterial = courses.get_latest_textmaterial(id)
     textquestions = questions.get_active_textquestions(id)
     course_stats = questions.get_statistics_for_one_course(user_id, id)
     if course:
-        return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions, course_stats=course_stats)
+        return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions,
+                                course_stats=course_stats, user_in_course=user_in_course)
     else:
         return render_template("error.html", message="Kurssia ei löydy")
+
+@app.route("/join_course")
+def join_course():
+    user_id = session["user_id"]
+    course_id =session["course_id"]
+    if courses.add_user_to_course(user_id, course_id):        
+        return redirect(f"/courses/{course_id}")
+    else:
+        return render_template("error.html", message="Kurssille liittyminen ei onnistunut")
+
+@app.route("/remove_from_course")
+def remove_from_course():
+    user_id = session["user_id"]
+    course_id =session["course_id"]
+    if courses.remove_user_from_course(user_id, course_id):        
+        return redirect(f"/courses/{course_id}")
+    else:
+        return render_template("error.html", message="Kurssilta poistuminen ei onnistunut")
 
 @app.route("/login", methods=["GET","POST"])
 def login():
