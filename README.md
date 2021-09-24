@@ -40,3 +40,5 @@ Puuttuvia asioita:
 -Moneen kysymykseen vastaaminen samalla kertaa\
 -Tekstimateriaalin suoraviivaisempi muokkaaminen\
 -Käyttöjärjestelmän ulkoasun viimeistely
+
+
