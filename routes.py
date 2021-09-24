@@ -13,7 +13,7 @@ def course_pages(id):
     course = courses.get_course(id)
     textmaterial = courses.get_latest_textmaterial(id)
     textquestions = questions.get_active_textquestions(id)
-    course_stats = questions.get_statistics_for_one_course(user_id, course)
+    course_stats = questions.get_statistics_for_one_course(user_id, id)
     if course:
         return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions, course_stats=course_stats)
     else:
