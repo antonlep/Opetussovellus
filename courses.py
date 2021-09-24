@@ -1,21 +1,22 @@
-from db import db
 from flask import session
+from db import db
 
 def get_active_courses():
     sql = "SELECT id, name, visible FROM courses WHERE visible = true"
     result = db.session.execute(sql)
     courses = result.fetchall()
-    return courses 
+    return courses
 
-def get_course(id):
-    sql = "SELECT id, name, visible FROM courses WHERE id=:id"
-    result = db.session.execute(sql, {"id":id})
+def get_course(course_id):
+    print(course_id)
+    sql = "SELECT id, name, visible FROM courses WHERE id=:course_id"
+    result = db.session.execute(sql, {"course_id":course_id})
     course = result.fetchone()
+    print(course)
     if course:
         session["course_id"] = course.id
-        return course 
-    else:
-        return None
+        return course
+    return None
 
 def add_course(name):
     visible = 'true'
@@ -27,10 +28,10 @@ def add_course(name):
         return False
     return True
 
-def delete_course(id):
+def delete_course(course_id):
     try:
-        sql = "UPDATE courses SET visible='f' WHERE id=:id"
-        db.session.execute(sql, {"id":id})
+        sql = "UPDATE courses SET visible='f' WHERE id=:course_id"
+        db.session.execute(sql, {"course_id":course_id})
         db.session.commit()
     except:
         return False
@@ -40,14 +41,15 @@ def delete_course(id):
 def check_if_user_in_course(user_id, course_id):
     sql = "SELECT id FROM courseusers WHERE user_id=:user_id AND course_id=:course_id"
     result = db.session.execute(sql, {"user_id":user_id, "course_id":course_id})
-    r = result.fetchone()
-    if r:
+    check = result.fetchone()
+    if check:
         return True
     return False
 
 def add_user_to_course(user_id, course_id):
     try:
-        sql = "INSERT INTO courseusers (user_id, course_id) VALUES (:user_id, :course_id) ON CONFLICT DO NOTHING"
+        sql = """INSERT INTO courseusers (user_id, course_id) VALUES (:user_id, :course_id)
+                 ON CONFLICT DO NOTHING"""
         db.session.execute(sql, {"user_id":user_id, "course_id":course_id})
         db.session.commit()
     except:
@@ -66,7 +68,8 @@ def remove_user_from_course(user_id, course_id):
 
 def add_textmaterial(course_id, textmaterial):
     try:
-        sql = "INSERT INTO textmaterials (course_id, textmaterial) VALUES (:course_id, :textmaterial)"
+        sql = """INSERT INTO textmaterials (course_id, textmaterial)
+                 VALUES (:course_id, :textmaterial)"""
         db.session.execute(sql, {"course_id":course_id, "textmaterial":textmaterial})
         db.session.commit()
     except:
