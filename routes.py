@@ -13,10 +13,9 @@ def course_pages(id):
     course = courses.get_course(id)
     textmaterial = courses.get_latest_textmaterial(id)
     textquestions = questions.get_active_textquestions(id)
-    answers = questions.get_correct_answers(id, user_id)
-    points = [answers, len(textquestions)]
+    course_stats = questions.get_statistics_for_one_course(user_id, course)
     if course:
-        return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions, points=points)
+        return render_template("course.html", course=course, textmaterial=textmaterial, textquestions=textquestions, course_stats=course_stats)
     else:
         return render_template("error.html", message="Kurssia ei löydy")
 
@@ -107,7 +106,7 @@ def answer_textquestion():
 @app.route("/statistics")
 def statistics():
     user_id = session["user_id"]
-    courses = questions.get_statistics_by_course(user_id)
+    courses = questions.get_statistics_for_all_courses(user_id)
     return render_template("statistics.html", courses = courses)
 
 @app.route("/logout")

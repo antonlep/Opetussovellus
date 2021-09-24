@@ -40,6 +40,6 @@ Oikea vastaus: <input type="text" name="textanswer">
 <input type="submit" value="Tallenna">
 </form>
 {% else %}
-Pisteet: {{ points[0] }}/{{ points[1] }}
+{{ course_stats.correct }}/{{ course_stats.questions }}
 {% endif %}
 <a href="/">Takaisin</a>

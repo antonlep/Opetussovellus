@@ -37,7 +37,7 @@ def get_number_of_points_by_course(user_id):
     answers = result.fetchall()
     return answers
 
-def get_statistics_by_course(user_id):
+def get_statistics_for_all_courses(user_id):
     sql = """SELECT Q.id, Q.name, MAX(COALESCE(X.count,0)) correct, COUNT(Z.id) questions FROM courses Q LEFT JOIN (SELECT A.id, A.name, COUNT(*) FROM courses A
             LEFT JOIN textquestions B ON A.id = B.course_id WHERE B.id IN (SELECT B.id FROM textquestions B
             LEFT JOIN textanswers C ON B.id = C.question_id WHERE B.visible = true AND user_id = :user_id AND B.answer = C.answer GROUP BY B.id)
@@ -45,6 +45,16 @@ def get_statistics_by_course(user_id):
             GROUP BY Q.id"""
     result = db.session.execute(sql, {"user_id":user_id})
     answers = result.fetchall()
+    return answers
+
+def get_statistics_for_one_course(user_id, course_id):
+    sql = """SELECT Q.id, Q.name, MAX(COALESCE(X.count,0)) correct, COUNT(Z.id) questions FROM courses Q LEFT JOIN (SELECT A.id, A.name, COUNT(*) FROM courses A
+            LEFT JOIN textquestions B ON A.id = B.course_id WHERE B.id IN (SELECT B.id FROM textquestions B
+            LEFT JOIN textanswers C ON B.id = C.question_id WHERE B.visible = true AND user_id = :user_id AND B.answer = C.answer GROUP BY B.id)
+            GROUP BY A.id) X ON Q.id = X.id LEFT JOIN textquestions Z ON Q.id = Z.course_id WHERE Q.id = 1 AND Q.visible = true AND COALESCE(Z.visible, true) = true
+            GROUP BY Q.id"""
+    result = db.session.execute(sql, {"user_id":user_id})
+    answers = result.fetchone()
     return answers
 
 def add_textquestion(course_id, question, answer):
