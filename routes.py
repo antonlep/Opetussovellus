@@ -46,9 +46,11 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        if not users.valid_input(username) or not users.valid_input(password):
+            return render_template("login.html", message="Käyttäjätunnus tai salasana ei kelpaa") 
         if users.login(username, password):
             return redirect("/")
-        return render_template("error.html", message="Väärä tunnus tai salasana")
+        return render_template("login.html", message="Väärä tunnus tai salasana")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -59,13 +61,16 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         teacher = request.form.getlist("teacher")
-        if password1 != password2:
-            return render_template("error.html", message="Salasanat eroavat")
+        if (not users.valid_input(username) or not users.valid_input(password1)
+            or not users.valid_input(password2)):
+            return render_template("register.html", message="Käyttäjätunnus tai salasana ei kelpaa") 
         if users.check(username):
-            return render_template("error.html", message="Käyttäjätunnus on jo olemassa")
+            return render_template("register.html", message="Käyttäjätunnus on jo olemassa")
+        if password1 != password2:
+            return render_template("register.html", message="Salasanat eroavat")
         if users.register(username, password1, teacher):
             return redirect("/")
-        return render_template("error.html", message="Rekisteröinti ei onnistunut")
+        return render_template("register.html", message="Rekisteröinti ei onnistunut")
 
 @app.route("/add_course", methods=["POST"])
 def add_course():

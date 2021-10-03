@@ -1,8 +1,13 @@
 <form action="/login" method="post">
-Tunnus: <input type="text" name="username">
+Tunnus: <input type="text" name="username" required minlength="1" required maxlength ="50">
 <p>
-Salasana: <input type="password" name="password">
+Salasana: <input type="password" name="password" required minlength="1" required maxlength ="50">
 <p>
 <input type="submit" value="Kirjaudu">
 </form>
+<p style="color:red;">
+{{ message }}
+</p>
 <a href="/register">Rekisteröidy</a>
+<p>
+<a href="/">Takaisin</a>
