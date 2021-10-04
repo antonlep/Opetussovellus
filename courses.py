@@ -8,11 +8,9 @@ def get_active_courses():
     return courses
 
 def get_course(course_id):
-    print(course_id)
     sql = "SELECT id, name, visible FROM courses WHERE id=:course_id"
     result = db.session.execute(sql, {"course_id":course_id})
     course = result.fetchone()
-    print(course)
     if course:
         session["course_id"] = course.id
         return course

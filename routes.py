@@ -12,15 +12,15 @@ def index():
 @app.route("/courses/<int:course_id>")
 def course_pages(course_id):
     user_id = session["user_id"]
-    course = courses.get_course(course_id)
-    user_in_course = courses.check_if_user_in_course(user_id, course_id)
-    textmaterial = courses.get_latest_textmaterial(course_id)
-    textquestions = questions.get_active_textquestions(course_id)
-    course_stats = questions.get_statistics_for_one_course(user_id, course_id)
+    course=courses.get_course(course_id)
     if course:
-        return render_template("course.html", course=course, textmaterial=textmaterial,
-                                textquestions=textquestions, course_stats=course_stats,
-                                user_in_course=user_in_course)
+        return render_template(
+            "course.html",
+            course=course,
+            textmaterial=courses.get_latest_textmaterial(course_id),
+            textquestions=questions.get_active_textquestions(course_id),
+            course_stats=questions.get_statistics_for_one_course(user_id, course_id),
+            user_in_course=courses.check_if_user_in_course(user_id, course_id))
     return render_template("error.html", message="Kurssia ei löydy")
 
 @app.route("/join_course")
@@ -123,8 +123,7 @@ def answer_textquestion():
 @app.route("/statistics")
 def statistics():
     user_id = session["user_id"]
-    courses_stats = questions.get_statistics_for_all_courses(user_id)
-    return render_template("statistics.html", courses = courses_stats)
+    return render_template("statistics.html", courses = questions.get_statistics_for_all_courses(user_id))
 
 @app.route("/logout")
 def logout():
