@@ -1,32 +1,47 @@
-Tervetuloa!
-<p>
-{% if session.user_id %} 
-<p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
-<a href="/statistics">Pistetaulukko</a>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-<a href="/login">Kirjaudu sisään</a>
-<a href="/register">Rekisteröidy</a>
-{% endif %}
-<hr>
-{% for course in courses %}
-{% if session.user_id %} 
-<a href="/courses/{{ course.id }}">{{ course.name }}</a>
-{% else %}
-{{ course.name }}
-{% endif %}
-<hr>
-{% endfor %}
-{% if session.admin %}
-Lisää kurssi:
-<p>
-<form action="/add_course" method="post">
-Kurssin nimi: <input type="text" name="course_name">
-<p>
-<input type="submit" value="Lisää">
-</form>
-{% endif %}
-<p style="color:red;">
-    {{ message }}
-</p>
-<p>
+<html lang="fi">
+    <head>
+        <title>Aloitussivu | Opetussovellus</title>
+    </head>
+    <body>
+        <header>
+            <h1>Opetussovellus</h1>
+            <p>Tervetuloa!</p>
+            {% if session.user_id %} 
+            <p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
+            <nav>
+                <a href="/statistics">Pistetaulukko</a>
+                <a href="/logout">Kirjaudu ulos</a>
+            </nav>
+            {% else %}
+            <p>Kirjaudu sisään nähdäksesi kurssien sisällön.</p>
+            <nav>
+                <a href="/login">Kirjaudu sisään</a>
+                <a href="/register">Rekisteröidy</a>
+            </nav>
+            {% endif %}
+        </header>
+        <section>
+            <ul>
+                {% for course in courses %}
+                {% if session.user_id %} 
+                <li><a href="/courses/{{ course.id }}">{{ course.name }}</a></li>
+                {% else %}
+                <li>{{ course.name }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            {% if session.admin %}
+            <p>Lisää kurssi:</p>
+            <form action="/add_course" method="post">
+            Kurssin nimi: <input type="text" name="course_name">
+            <input type="submit" value="Lisää">
+            </form>
+            {% endif %}
+        </section>
+        <section>
+            <p style="color:red;">{{ message }}</p>
+        </section>
+    </body>
+</html>

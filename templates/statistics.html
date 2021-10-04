@@ -1,5 +1,22 @@
-{% for course in courses %}
-<b>{{ course.name }}</b> {{ course.correct }}/{{ course.questions }} pistettä   
-<br>
-{% endfor %}
-<a href="/">Takaisin</a>
+<html lang="fi">
+    <head>
+        <title>Pistetaulukko | Opetussovellus</title>
+    </head>
+    <body>
+        <header>
+            <h1>Pistetaulukko</h1>
+        </header>
+        <section>
+            <ul>
+                {% for course in courses %}
+                <li><b>{{ course.name }}</b> {{ course.correct }}/{{ course.questions }} pistettä</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <footer>
+            <nav>
+                <a href="/">Takaisin</a>
+            </nav>
+        </footer>
+    </body>
+</html>

@@ -1,13 +1,26 @@
-<form action="/login" method="post">
-Tunnus: <input type="text" name="username" required minlength="1" required maxlength ="50">
-<p>
-Salasana: <input type="password" name="password" required minlength="1" required maxlength ="50">
-<p>
-<input type="submit" value="Kirjaudu">
-</form>
-<p style="color:red;">
-{{ message }}
-</p>
-<a href="/register">Rekisteröidy</a>
-<p>
-<a href="/">Takaisin</a>
+<html lang="fi">
+    <head>
+        <title>Kirjaudu sisään | Opetussovellus</title>
+    </head>
+    <body>
+        <header>
+            <h1>Kirjaudu sisään</h1>
+        </header>
+        <section>
+            <form action="/login" method="post">
+            <p>Tunnus: <input type="text" name="username" required minlength="1" required maxlength ="50"></p>
+            <p>Salasana: <input type="password" name="password" required minlength="1" required maxlength ="50"></p>
+            <input type="submit" value="Kirjaudu">
+            </form>
+        </section>
+        <section>
+            <p style="color:red;">{{ message }}</p>
+        </section>
+        <footer>
+            <nav>
+                <a href="/register">Rekisteröidy</a>
+                <a href="/">Takaisin</a>
+            </nav>
+        </footer>
+    </body>
+</html>

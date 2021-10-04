@@ -1,15 +1,27 @@
-<form action="/register" method="post">
-Tunnus: <input type="text" name="username" required minlength="1" required maxlength ="50">
-<p>
-Salasana: <input type="password" name="password1" required minlength="1" required maxlength ="50">
-<p>
-Salasana uudestaan: <input type="password" name="password2" required minlength="1" required maxlength ="50">
-<p>
-<input type="checkbox" name="teacher" value="1"> Opettaja
-<p>
-<input type="submit" value="Luo tunnus">
-</form>
-<p style="color:red;">
-{{ message }}
-</p>
-<a href="/">Takaisin</a>
+<html lang="fi">
+    <head>
+        <title>Rekisteröidy | Opetussovellus</title>
+    </head>
+    <body>
+        <header>
+            <h1>Rekisteröidy</h1>
+        </header>
+        <section>
+            <form action="/register" method="post">
+            <p>Tunnus: <input type="text" name="username" required minlength="1" required maxlength ="50"></p>
+            <p>Salasana: <input type="password" name="password1" required minlength="1" required maxlength ="50"></p>
+            <p>Salasana uudestaan: <input type="password" name="password2" required minlength="1" required maxlength ="50">
+            <p><input type="checkbox" name="teacher" value="1"> Opettaja</p>
+            <input type="submit" value="Luo tunnus">
+            </form>
+        </section> 
+        <section>
+            <p style="color:red;">{{ message }}</p>
+        </section>
+        <footer>
+            <nav>
+                <a href="/">Takaisin</a>
+           </nav>
+        </footer>
+    </body>
+</html>

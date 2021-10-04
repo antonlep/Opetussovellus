@@ -1,53 +1,63 @@
-<title>{{ course.name }}</title>
-<h1>{{ course.name }}</h1>
-{% if session.admin %}
-<a href="/delete_course">Poista kurssi</a>
-{% elif user_in_course %}
-<a href="/remove_from_course">Poistu kurssilta</a>
-{% else %}
-<a href="/join_course">Liity kurssille</a>
-{% endif %}
-<hr>
-{{ textmaterial.textmaterial }}
-<hr>
-{% if session.admin %}
-<form action="/add_textmaterial" method="post">
-Kurssimateriaali: <input type="text" name="textmaterial">
-<p>
-<input type="submit" value="Tallenna">
-</form>
-{% endif %}
-<p>
-{% for textquestion in textquestions%}
-{% if session.admin %}
-<b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}
-<p>
-<form action="/delete_textquestion" method="post">
-<button type="submit" name="question_id" value="{{ textquestion.id }}">Poista</button>
-</form>
-{% else %}
-{{ textquestion.question}} 
-<form action="/answer_textquestion" method="post">
-<input type="text" name="textanswer">
-<button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
-</form>
-<p>
-{% endif %}
-{% endfor %}
-<p>
-{% if session.admin %}
-<form action="/add_textquestion" method="post">
-Uusi kysymys: <input type="text" name="textquestion">
-Oikea vastaus: <input type="text" name="textanswer">
-<p>
-<input type="submit" value="Tallenna">
-</form>
-<p>
-{% else %}
-{{ course_stats.correct }}/{{ course_stats.questions }}
-{% endif %}
-<p style="color:red;">
-    {{ message }}
-</p>
-<p>
-<a href="/">Takaisin</a>
+<html lang="fi">
+    <head>
+        <title>{{ course.name }} | Opetussovellus</title>
+    </head>
+    <body>
+        <header>
+            <h1>{{ course.name }}</h1>
+            <nav>
+                {% if session.admin %}
+                <a href="/delete_course">Poista kurssi</a>
+                {% elif user_in_course %}
+                <a href="/remove_from_course">Poistu kurssilta</a>
+                {% else %}
+                <a href="/join_course">Liity kurssille</a>
+                {% endif %}
+            </nav>
+        </header>
+        <section>
+            <article>
+                {{ textmaterial.textmaterial }}
+            </article>
+            {% if session.admin %}
+            <form action="/add_textmaterial" method="post">
+            Kurssimateriaali: <input type="text" name="textmaterial">
+            <input type="submit" value="Tallenna">
+            </form>
+            {% endif %}
+        </section>
+        <section>
+            {% for textquestion in textquestions%}
+            {% if session.admin %}
+            <p><b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}</p>
+            <form action="/delete_textquestion" method="post">
+            <button type="submit" name="question_id" value="{{ textquestion.id }}">Poista</button>
+            </form>
+            {% else %}
+            <p>{{ textquestion.question}}</p> 
+            <form action="/answer_textquestion" method="post">
+            <input type="text" name="textanswer">
+            <button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
+            </form>
+            {% endif %}
+            {% endfor %}
+            {% if session.admin %}
+            <form action="/add_textquestion" method="post">
+            Uusi kysymys: <input type="text" name="textquestion">
+            Oikea vastaus: <input type="text" name="textanswer">
+            <input type="submit" value="Tallenna">
+            </form>
+            {% else %}
+            <p>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</p>
+            {% endif %}
+        </section>
+        <section>
+            <p style="color:red;">{{ message }}</p>
+        </section>
+        <footer>
+            <nav>
+            <a href="/">Takaisin</a>
+            </nav>
+        </footer>
+    </body>
+</html>
