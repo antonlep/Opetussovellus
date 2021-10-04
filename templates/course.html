@@ -46,5 +46,8 @@ Oikea vastaus: <input type="text" name="textanswer">
 {% else %}
 {{ course_stats.correct }}/{{ course_stats.questions }}
 {% endif %}
+<p style="color:red;">
+    {{ message }}
+</p>
 <p>
 <a href="/">Takaisin</a>

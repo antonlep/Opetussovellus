@@ -29,7 +29,7 @@ def join_course():
     course_id =session["course_id"]
     if courses.add_user_to_course(user_id, course_id):
         return redirect(f"/courses/{course_id}")
-    return render_template("error.html", message="Kurssille liittyminen ei onnistunut")
+    return render_template(f"courses/{course_id}", message="Kurssille liittyminen ei onnistunut")
 
 @app.route("/remove_from_course")
 def remove_from_course():
@@ -37,7 +37,7 @@ def remove_from_course():
     course_id =session["course_id"]
     if courses.remove_user_from_course(user_id, course_id):
         return redirect(f"/courses/{course_id}")
-    return render_template("error.html", message="Kurssilta poistuminen ei onnistunut")
+    return render_template(f"courses/{course_id}", message="Kurssilta poistuminen ei onnistunut")
 
 @app.route("/login", methods=["GET","POST"])
 def login():
@@ -77,13 +77,13 @@ def add_course():
     course_name = request.form["course_name"]
     if courses.add_course(course_name):
         return redirect("/")
-    return render_template("error.html", message="Kurssin lisääminen ei onnistu")
+    return render_template("/", message="Kurssin lisääminen ei onnistu")
 
 @app.route("/delete_course")
 def delete_course():
     if courses.delete_course(session["course_id"]):
         return redirect("/")
-    return render_template("error.html", message="Kurssin lisääminen ei onnistu")
+    return render_template("/", message="Kurssin poistaminen ei onnistu")
 
 @app.route("/add_textmaterial", methods=["POST"])
 def add_textmaterial():
@@ -91,7 +91,7 @@ def add_textmaterial():
     course_id = session["course_id"]
     if courses.add_textmaterial(course_id, textmaterial):
         return redirect(f"/courses/{course_id}")
-    return render_template("error.html", message="Materiaalin lisääminen ei onnistu")
+    return render_template(f"/courses/{course_id}", message="Materiaalin lisääminen ei onnistu")
 
 @app.route("/add_textquestion", methods=["POST"])
 def add_textquestion():
@@ -100,7 +100,7 @@ def add_textquestion():
     course_id = session["course_id"]
     if questions.add_textquestion(course_id, textquestion, textanswer):
         return redirect(f"/courses/{course_id}")
-    return render_template("error.html", message="Kysymyksen lisääminen ei onnistu")
+    return render_template(f"/courses/{course_id}", message="Kysymyksen lisääminen ei onnistu")
 
 @app.route("/delete_textquestion", methods=["POST"])
 def delete_textquestion():
@@ -108,7 +108,7 @@ def delete_textquestion():
     question_id = request.form["question_id"]
     if questions.delete_textquestion(question_id):
         return redirect(f"/courses/{course_id}")
-    return render_template("error.html", message="Kysymyksen poistaminen ei onnistu")
+    return render_template(f"/courses/{course_id}", message="Kysymyksen poistaminen ei onnistu")
 
 @app.route("/answer_textquestion", methods=["POST"])
 def answer_textquestion():
@@ -118,7 +118,7 @@ def answer_textquestion():
     answer = request.form["textanswer"]
     if questions.add_textanswer(user_id, question_id, answer):
         return redirect(f"/courses/{course_id}")
-    return render_template("error.html", message="Vastaaminen ei onnistu")
+    return render_template(f"/courses/{course_id}", message="Vastaaminen ei onnistu")
 
 @app.route("/statistics")
 def statistics():
