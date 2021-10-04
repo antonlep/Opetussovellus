@@ -79,3 +79,10 @@ def get_latest_textmaterial(course_id):
     result = db.session.execute(sql, {"course_id":course_id})
     material = result.fetchone()
     return material
+
+def get_course_participants(course_id):
+    sql = """SELECT U.id, U.username FROM CourseUsers C LEFT JOIN Users U ON C.user_id = U.id
+             WHERE U.admin = 'f' AND C.course_id = :course_id"""
+    result = db.session.execute(sql, {"course_id":course_id})
+    participants = result.fetchall()
+    return participants

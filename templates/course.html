@@ -52,6 +52,15 @@
             {% endif %}
         </section>
         <section>
+            {% if session.admin %}
+            <ul>
+                {% for participant in participants %}
+                <li>{{ participant.username }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+        <section>
             <p style="color:red;">{{ message }}</p>
         </section>
         <footer>

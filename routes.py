@@ -20,7 +20,8 @@ def course_pages(course_id):
             textmaterial=courses.get_latest_textmaterial(course_id),
             textquestions=questions.get_active_textquestions(course_id),
             course_stats=questions.get_statistics_for_one_course(user_id, course_id),
-            user_in_course=courses.check_if_user_in_course(user_id, course_id))
+            user_in_course=courses.check_if_user_in_course(user_id, course_id),
+            participants=courses.get_course_participants(course_id))
     return render_template("error.html", message="Kurssia ei löydy")
 
 @app.route("/join_course")
