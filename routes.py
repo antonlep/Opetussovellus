@@ -13,6 +13,9 @@ def index():
 def course_pages(course_id):
     user_id = session["user_id"]
     course=courses.get_course(course_id)
+    participants=courses.get_course_participants(course_id)
+    points = {i[1]:questions.get_statistics_for_one_course(i[0], course_id) for i in participants}
+    print(points)
     if course:
         return render_template(
             "course.html",
@@ -21,7 +24,7 @@ def course_pages(course_id):
             textquestions=questions.get_active_textquestions(course_id),
             course_stats=questions.get_statistics_for_one_course(user_id, course_id),
             user_in_course=courses.check_if_user_in_course(user_id, course_id),
-            participants=courses.get_course_participants(course_id))
+            participant_points=points)
     return render_template("error.html", message="Kurssia ei löydy")
 
 @app.route("/join_course")

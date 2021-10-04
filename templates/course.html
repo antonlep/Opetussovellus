@@ -53,9 +53,10 @@
         </section>
         <section>
             {% if session.admin %}
+            <h2>Pistetilanne</h2>
             <ul>
-                {% for participant in participants %}
-                <li>{{ participant.username }}</li>
+                {% for key, value in participant_points.items() %}
+                <li><b>{{ key }}</b> {{ value[2] }}/{{ value[3] }}</li>
                 {% endfor %}
             </ul>
             {% endif %}

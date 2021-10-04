@@ -36,7 +36,6 @@ Pistetaulukko:
 Puuttuvia asioita:
 
 -Monivalintakysymykset ja vastaukset\
--Opettajalle mahdollisuus nähdä kurssille liittyneiden pisteet\
 -Moneen kysymykseen vastaaminen samalla kertaa\
 -Tekstimateriaalin suoraviivaisempi muokkaaminen\
 -Käyttöjärjestelmän ulkoasun viimeistely

@@ -9,7 +9,9 @@
             {% if session.user_id %} 
             <p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
             <nav>
+                {% if not session.admin %}
                 <a href="/statistics">Pistetaulukko</a>
+                {% endif %}
                 <a href="/logout">Kirjaudu ulos</a>
             </nav>
             {% else %}
