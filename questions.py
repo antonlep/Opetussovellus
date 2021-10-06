@@ -7,6 +7,13 @@ def get_active_textquestions(course_id):
     questions = result.fetchall()
     return questions
 
+def get_active_multiquestions(course_id):
+    sql = """SELECT id, question, choice1, choice2, choice3, answer FROM multiplechoicequestions WHERE course_id=:course_id
+             AND visible=true"""
+    result = db.session.execute(sql, {"course_id":course_id})
+    questions = result.fetchall()
+    return questions
+
 def get_active_courses():
     sql = "SELECT id, name FROM courses WHERE visible = true "
     result = db.session.execute(sql)
@@ -103,6 +110,37 @@ def add_textanswer(user_id, question_id, answer):
 def delete_textquestion(question_id):
     try:
         sql = "UPDATE textquestions SET visible='f' WHERE id=:question_id"
+        db.session.execute(sql, {"question_id":question_id})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def add_multiquestion(course_id, question, choice1, choice2, choice3, answer):
+    visible = 'true'
+    try:
+        sql = """INSERT INTO multiplechoicequestions (course_id, question, choice1, choice2, choice3, answer, visible)
+                 VALUES (:course_id, :question, :choice1, :choice2, :choice3, :answer, :visible)"""
+        db.session.execute(sql, {"course_id":course_id, "question":question, "choice1":choice1,
+                                 "choice2":choice2, "choice3":choice3, "answer":answer, "visible":visible})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def add_multianswer(user_id, question_id, answer):
+    try:
+        sql = """INSERT INTO multiplechoiceanswers (user_id, question_id, answer, time)
+                 VALUES (:user_id, :question_id, :answer, NOW())"""
+        db.session.execute(sql, {"user_id":user_id, "question_id":question_id, "answer":answer})
+        db.session.commit()
+    except:
+        return False
+    return True
+
+def delete_multiquestion(question_id):
+    try:
+        sql = "UPDATE multiplechoicequestions SET visible='f' WHERE id=:question_id"
         db.session.execute(sql, {"question_id":question_id})
         db.session.commit()
     except:

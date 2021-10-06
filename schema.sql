@@ -43,8 +43,12 @@ CREATE TABLE TextAnswers (
 CREATE TABLE MultipleChoiceQuestions (
     id SERIAL PRIMARY KEY,
     course_id INTEGER REFERENCES Courses,
-    question_text TEXT,
-    right_answer INTEGER
+    question TEXT,
+    choice1 TEXT,
+    choice2 TEXT,
+    choice3 TEXT,
+    answer INTEGER,
+    visible BOOLEAN
 );
 
 CREATE TABLE MultipleChoiceAnswers (

@@ -22,6 +22,7 @@ def course_pages(course_id):
             course=course,
             textmaterial=courses.get_latest_textmaterial(course_id),
             textquestions=questions.get_active_textquestions(course_id),
+            multiquestions=questions.get_active_multiquestions(course_id),
             course_stats=questions.get_statistics_for_one_course(user_id, course_id),
             user_in_course=courses.check_if_user_in_course(user_id, course_id),
             participant_points=points)
@@ -111,6 +112,27 @@ def delete_textquestion():
     course_id = session["course_id"]
     question_id = request.form["question_id"]
     if questions.delete_textquestion(question_id):
+        return redirect(f"/courses/{course_id}")
+    return render_template(f"/courses/{course_id}", message="Kysymyksen poistaminen ei onnistu")
+
+@app.route("/add_multiquestion", methods=["POST"])
+def add_multiquestion():
+    print("asdfasd")
+    multiquestion = request.form["multiquestion"]
+    choice1 = request.form["choice1"]
+    choice2 = request.form["choice2"]
+    choice3 = request.form["choice3"]
+    multianswer = request.form["multianswer"]
+    course_id = session["course_id"]
+    if questions.add_multiquestion(course_id, multiquestion, choice1, choice2, choice3, multianswer):
+        return redirect(f"/courses/{course_id}")
+    return render_template(f"/courses/{course_id}", message="Kysymyksen lisääminen ei onnistu")
+
+@app.route("/delete_multiquestion", methods=["POST"])
+def delete_multiquestion():
+    course_id = session["course_id"]
+    question_id = request.form["question_id"]
+    if questions.delete_multiquestion(question_id):
         return redirect(f"/courses/{course_id}")
     return render_template(f"/courses/{course_id}", message="Kysymyksen poistaminen ei onnistu")
 
