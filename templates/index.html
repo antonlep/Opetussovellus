@@ -23,6 +23,9 @@
             {% endif %}
         </header>
         <section>
+            {% if courses %}
+            <h2>Kurssit</h2>
+            {% endif %}
             <ul>
                 {% for course in courses %}
                 {% if session.user_id %} 

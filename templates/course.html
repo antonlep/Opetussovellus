@@ -16,6 +16,7 @@
             </nav>
         </header>
         <section>
+            <h2>Kurssimateriaali</h2>
             <article>
                 {{ textmaterial.textmaterial }}
             </article>
@@ -27,6 +28,7 @@
             {% endif %}
         </section>
         <section>
+            <h2>Kysymykset</h2>
             {% for textquestion in textquestions%}
             {% if session.admin %}
             <p><b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}</p>
