@@ -24,6 +24,7 @@ def course_pages(course_id):
             textquestions=questions.get_active_textquestions(course_id),
             multiquestions=questions.get_active_multiquestions(course_id),
             course_stats=questions.get_statistics_for_one_course(user_id, course_id),
+            course_multi_stats=questions.get_multistatistics_for_one_course(user_id, course_id),
             user_in_course=courses.check_if_user_in_course(user_id, course_id),
             participant_points=points)
     return render_template("error.html", message="Kurssia ei löydy")

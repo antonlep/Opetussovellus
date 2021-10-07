@@ -44,7 +44,7 @@
             {% endif %}
             {% endfor %}
             {% if not session.admin %}
-            <p>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</p>
+            <p><b>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</b></p>
             {% endif %}
             {% for multiquestion in multiquestions%}
             {% if session.admin %}
@@ -65,7 +65,7 @@
             {% endif %}
             {% endfor %}
             {% if not session.admin %}
-            <p>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</p>
+            <p><b>Pisteet: {{ course_multi_stats.correct }}/{{ course_multi_stats.questions }}</b></p>
             {% endif %}
         </section>
         <section>
