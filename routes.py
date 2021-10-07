@@ -93,6 +93,7 @@ def delete_course():
 
 @app.route("/add_textmaterial", methods=["POST"])
 def add_textmaterial():
+    print("asdfasdf")
     textmaterial = request.form["textmaterial"]
     course_id = session["course_id"]
     if courses.add_textmaterial(course_id, textmaterial):

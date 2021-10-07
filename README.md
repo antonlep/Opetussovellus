@@ -35,7 +35,6 @@ Pistetaulukko:
 
 Puuttuvia asioita:
 
--Monivalintakysymykset ja vastaukset\
 -Moneen kysymykseen vastaaminen samalla kertaa\
 -Tekstimateriaalin suoraviivaisempi muokkaaminen\
 -Käyttöjärjestelmän ulkoasun viimeistely

@@ -17,14 +17,17 @@
         </header>
         <section>
             <h2>Kurssimateriaali</h2>
+            {% if session.admin %}
+            <form action="/add_textmaterial" method="post">
+            <textarea rows = "10" cols="60" name="textmaterial">
+                {{ textmaterial.textmaterial }}
+            </textarea>
+            <input type="submit" value="Tallenna">
+            </form>
+            {% else %}
             <article>
                 {{ textmaterial.textmaterial }}
             </article>
-            {% if session.admin %}
-            <form action="/add_textmaterial" method="post">
-            Kurssimateriaali: <input type="text" name="textmaterial">
-            <input type="submit" value="Tallenna">
-            </form>
             {% endif %}
         </section>
         <section>
