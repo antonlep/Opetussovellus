@@ -8,7 +8,10 @@
         </header>
         <section>
             <ul>
-                {% for course in courses %}
+                {% for course in textcourses %}
+                <li><b>{{ course.name }}</b> {{ course.correct }}/{{ course.questions }} pistettä</li>
+                {% endfor %}
+                {% for course in multicourses %}
                 <li><b>{{ course.name }}</b> {{ course.correct }}/{{ course.questions }} pistettä</li>
                 {% endfor %}
             </ul>

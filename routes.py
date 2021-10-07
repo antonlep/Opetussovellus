@@ -136,6 +136,16 @@ def delete_multiquestion():
         return redirect(f"/courses/{course_id}")
     return render_template(f"/courses/{course_id}", message="Kysymyksen poistaminen ei onnistu")
 
+@app.route("/answer_multiquestion", methods=["POST"])
+def answer_multiquestion():
+    course_id = session["course_id"]
+    user_id = session["user_id"]
+    question_id = request.form["question_id"]
+    answer = request.form["answer"]
+    if questions.add_multianswer(user_id, question_id, answer):
+        return redirect(f"/courses/{course_id}")
+    return render_template(f"/courses/{course_id}", message="Vastaaminen ei onnistu")
+
 @app.route("/answer_textquestion", methods=["POST"])
 def answer_textquestion():
     course_id = session["course_id"]
@@ -149,7 +159,8 @@ def answer_textquestion():
 @app.route("/statistics")
 def statistics():
     user_id = session["user_id"]
-    return render_template("statistics.html", courses = questions.get_statistics_for_all_courses(user_id))
+    return render_template("statistics.html", textcourses = questions.get_statistics_for_all_courses(user_id),
+                           multicourses = questions.get_multistatistics_for_all_courses(user_id))
 
 @app.route("/logout")
 def logout():
