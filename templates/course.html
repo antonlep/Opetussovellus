@@ -19,9 +19,7 @@
             <h2>Kurssimateriaali</h2>
             {% if session.admin %}
             <form action="/add_textmaterial" method="post">
-            <textarea rows = "10" cols="60" name="textmaterial">
-                {{ textmaterial.textmaterial }}
-            </textarea>
+            <textarea rows = "10" cols="60" name="textmaterial">{{ textmaterial.textmaterial }}</textarea>
             <input type="submit" value="Tallenna">
             </form>
             {% else %}
