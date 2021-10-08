@@ -36,7 +36,8 @@ Pistetaulukko:
 Puuttuvia asioita:
 
 -Moneen kysymykseen vastaaminen samalla kertaa\
--Tekstimateriaalin suoraviivaisempi muokkaaminen\
+-Tekstimateriaalin parempi muokkaaminen\
+-Virheilmoitukset kurssisivuilla\
 -Käyttöjärjestelmän ulkoasun viimeistely
 
 

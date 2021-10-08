@@ -32,21 +32,21 @@
         </section>
         <section>
             <h2>Kysymykset</h2>
-            {% for textquestion in textquestions%}
             {% if session.admin %}
+            {% for textquestion in textquestions%}
             <p><b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}</p>
             <form action="/delete_textquestion" method="post">
             <button type="submit" name="question_id" value="{{ textquestion.id }}">Poista</button>
             </form>
+            {% endfor %}
             {% else %}
+            {% for textquestion in textquestions%}
             <p>{{ textquestion.question}}</p> 
             <form action="/answer_textquestion" method="post">
             <input type="text" name="textanswer">
             <button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
             </form>
-            {% endif %}
             {% endfor %}
-            {% if not session.admin %}
             <p><b>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</b></p>
             {% endif %}
             {% for multiquestion in multiquestions%}

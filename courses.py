@@ -66,6 +66,8 @@ def remove_user_from_course(user_id, course_id):
 
 def add_textmaterial(course_id, textmaterial):
     try:
+        print(textmaterial)
+        textmaterial = textmaterial.strip()
         sql = """INSERT INTO textmaterials (course_id, textmaterial)
                  VALUES (:course_id, :textmaterial)"""
         db.session.execute(sql, {"course_id":course_id, "textmaterial":textmaterial})

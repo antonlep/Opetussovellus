@@ -98,7 +98,7 @@ def add_textmaterial():
     course_id = session["course_id"]
     if courses.add_textmaterial(course_id, textmaterial):
         return redirect(f"/courses/{course_id}")
-    return render_template(f"/courses/{course_id}", message="Materiaalin lisääminen ei onnistu")
+    return render_template("error.html", message="Materiaalin lisääminen ei onnistu")
 
 @app.route("/add_textquestion", methods=["POST"])
 def add_textquestion():
@@ -107,7 +107,7 @@ def add_textquestion():
     course_id = session["course_id"]
     if questions.add_textquestion(course_id, textquestion, textanswer):
         return redirect(f"/courses/{course_id}")
-    return render_template(f"/courses/{course_id}", message="Kysymyksen lisääminen ei onnistu")
+    return render_template("error.html", message="Kysymyksen lisääminen ei onnistu")
 
 @app.route("/delete_textquestion", methods=["POST"])
 def delete_textquestion():
@@ -115,7 +115,7 @@ def delete_textquestion():
     question_id = request.form["question_id"]
     if questions.delete_textquestion(question_id):
         return redirect(f"/courses/{course_id}")
-    return render_template(f"/courses/{course_id}", message="Kysymyksen poistaminen ei onnistu")
+    return render_template("error.html", message="Kysymyksen poistaminen ei onnistu")
 
 @app.route("/add_multiquestion", methods=["POST"])
 def add_multiquestion():
@@ -128,7 +128,7 @@ def add_multiquestion():
     course_id = session["course_id"]
     if questions.add_multiquestion(course_id, multiquestion, choice1, choice2, choice3, multianswer):
         return redirect(f"/courses/{course_id}")
-    return render_template(f"/courses/{course_id}", message="Kysymyksen lisääminen ei onnistu")
+    return render_template("error.html", message="Kysymyksen lisääminen ei onnistu")
 
 @app.route("/delete_multiquestion", methods=["POST"])
 def delete_multiquestion():
@@ -136,7 +136,7 @@ def delete_multiquestion():
     question_id = request.form["question_id"]
     if questions.delete_multiquestion(question_id):
         return redirect(f"/courses/{course_id}")
-    return render_template(f"/courses/{course_id}", message="Kysymyksen poistaminen ei onnistu")
+    return render_template("error.html", message="Kysymyksen poistaminen ei onnistu")
 
 @app.route("/answer_multiquestion", methods=["POST"])
 def answer_multiquestion():
@@ -146,7 +146,7 @@ def answer_multiquestion():
     answer = request.form["answer"]
     if questions.add_multianswer(user_id, question_id, answer):
         return redirect(f"/courses/{course_id}")
-    return render_template(f"/courses/{course_id}", message="Vastaaminen ei onnistu")
+    return render_template("error.html", message="Vastaaminen ei onnistu")
 
 @app.route("/answer_textquestion", methods=["POST"])
 def answer_textquestion():
@@ -156,7 +156,7 @@ def answer_textquestion():
     answer = request.form["textanswer"]
     if questions.add_textanswer(user_id, question_id, answer):
         return redirect(f"/courses/{course_id}")
-    return render_template(f"/courses/{course_id}", message="Vastaaminen ei onnistu")
+    return render_template("error.html", message="Vastaaminen ei onnistu")
 
 @app.route("/statistics")
 def statistics():
