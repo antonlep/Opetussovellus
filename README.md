@@ -40,6 +40,7 @@ Puuttuvia asioita:
 -Isoja ja pieniä kirjaimia ei huomioitaisi vastauksissa\
 -Monivalintakysymysten suoraviivaisempi lisääminen\
 -Oikeiden vastausten korostaminen esim. vihreällä värillä\
+-Kysymyksien näyttö vain kurssille liittyneille\
 -Virheilmoitukset kurssisivuilla\
 -Käyttöjärjestelmän ulkoasun viimeistely
 
