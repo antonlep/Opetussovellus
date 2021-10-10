@@ -171,8 +171,9 @@ def answer_textquestion():
     user_id = session["user_id"]
     question_id = request.form["question_id"]
     answer = request.form["textanswer"]
-    if questions.add_textanswer(user_id, question_id, answer):
-        return redirect(f"/courses/{course_id}")
+    if courses.valid_input(answer):
+        if questions.add_textanswer(user_id, question_id, answer):
+            return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Vastaaminen ei onnistu")
 
 @app.route("/statistics")

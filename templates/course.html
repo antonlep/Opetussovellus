@@ -20,7 +20,7 @@
             <h2>Kurssimateriaali</h2>
             {% if session.admin %}
             <form action="/add_textmaterial" method="post">
-            <textarea rows = "10" cols="60" name="textmaterial">{{ textmaterial.textmaterial }}</textarea>
+            <textarea rows = "10" cols="60" name="textmaterial" required minlength="1" required maxlength ="20000">{{ textmaterial.textmaterial }}</textarea>
             <input type="submit" value="Tallenna">
             </form>
             {% else %}
@@ -42,7 +42,7 @@
             {% for textquestion in textquestions%}
             <p>{{ textquestion.question}}</p> 
             <form action="/answer_textquestion" method="post">
-            <input type="text" name="textanswer">
+            <input type="text" name="textanswer" required minlength="1" required maxlength ="500">
             <button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
             </form>
             {% endfor %}
@@ -78,17 +78,17 @@
             {% if session.admin %}
             <h2>Lisää uusi tekstikysymys:</h2>
             <form action="/add_textquestion" method="post">
-            <p>Uusi kysymys: <input type="text" name="textquestion"></p>
-            <p>Oikea vastaus: <input type="text" name="textanswer"></p>
+            <p>Uusi kysymys: <input type="text" name="textquestion" required minlength="1" required maxlength ="500"></p>
+            <p>Oikea vastaus: <input type="text" name="textanswer" required minlength="1" required maxlength ="500"></p>
             <input type="submit" value="Tallenna">
             </form>
             <h2>Lisää uusi monivalintakysymys:</h2>
             <form action="/add_multiquestion" method="post">
-            <p>Uusi kysymys: <input type="text" name="multiquestion"></p>
-            <p>Vaihtoehto 1: <input type="text" name="choice1"></p>
-            <p>Vaihtoehto 2: <input type="text" name="choice2"></p>
-            <p>Vaihtoehto 3: <input type="text" name="choice3"></p>
-            <p>Oikea vaihtoehto: <input type="text" name="multianswer"></p>
+            <p>Uusi kysymys: <input type="text" name="multiquestion" required minlength="1" required maxlength ="500"></p>
+            <p>Vaihtoehto 1: <input type="text" name="choice1" required minlength="1" required maxlength ="500"></p>
+            <p>Vaihtoehto 2: <input type="text" name="choice2" required minlength="1" required maxlength ="500"></p>
+            <p>Vaihtoehto 3: <input type="text" name="choice3 required minlength="1" required maxlength ="500""></p>
+            <p>Oikea vaihtoehto: <input type="text" name="multianswer" required minlength="1" required maxlength ="500"></p>
             <input type="submit" value="Tallenna">
             </form>
             {% endif %}
