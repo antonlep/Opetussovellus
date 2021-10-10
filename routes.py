@@ -29,15 +29,23 @@ def course_pages(course_id):
 def course_statistics(course_id):
     course=courses.get_course(course_id)
     participants=courses.get_course_participants(course_id)
-    points = {i[1]:questions.get_statistics_for_one_course(i[0], course_id) for i in participants}
-    multipoints = {i[1]:questions.get_multistatistics_for_one_course(i[0], course_id)
-                   for i in participants}
+    points = {}
+    for i in participants:
+        course_stats = questions.get_statistics_for_one_course(i[0], course_id).values()
+        print(i[1], course_stats)
+        points[i[1]] = course_stats[2:4]
+    for j in participants:
+        course_stats = questions.get_multistatistics_for_one_course(j[0], course_id).values()
+        if j[1] not in points:
+            points[j[1]] = course_stats[2:4]
+        else:
+            points[j[1]][0] += course_stats[2]
+            points[j[1]][1] += course_stats[3]
     if course:
         return render_template(
             "course_statistics.html",
             course=course,
-            participant_points=points,
-            participant_multipoints=multipoints)
+            participant_points=points)
     return render_template("error.html", message="Kurssia ei löydy")
 
 @app.route("/join_course")
@@ -189,8 +197,7 @@ def answer_textquestion():
 def statistics():
     user_id = session["user_id"]
     return render_template("statistics.html",
-                           textcourses = questions.get_statistics_for_all_courses(user_id),
-                           multicourses = questions.get_multistatistics_for_all_courses(user_id))
+                           courses = questions.get_statistics_for_all_courses(user_id))
 
 @app.route("/logout")
 def logout():

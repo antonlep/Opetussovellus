@@ -9,16 +9,9 @@
         </header>
         <section>
             {% if session.admin %}
-            <h2>Tekstikysymykset</h2>
             <ul>
                 {% for key, value in participant_points.items() %}
-                <li><b>{{ key }}</b> {{ value[2] }}/{{ value[3] }}</li>
-                {% endfor %}
-            </ul>
-            <h2>Monivalintakysymykset</h2>
-            <ul>
-                {% for key, value in participant_multipoints.items() %}
-                <li><b>{{ key }}</b> {{ value[2] }}/{{ value[3] }}</li>
+                <li><b>{{ key }}</b> {{ value[0] }}/{{ value[1] }}</li>
                 {% endfor %}
             </ul>
             {% endif %}

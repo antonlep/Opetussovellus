@@ -8,18 +8,18 @@
             <h1>Pistetaulukko</h1>
         </header>
         <section>
-            <h2>Tekstikysymykset</h2>
+            <!-- <h2>Tekstikysymykset</h2> -->
             <ul>
-                {% for course in textcourses %}
-                <li><b>{{ course.name }}</b> {{ course.correct }}/{{ course.questions }} pistettä</li>
+                {% for k, v in courses.items() %}
+                <li><b>{{ k }}</b> {{ v[0] }}/{{ v[1] }} pistettä</li>
                 {% endfor %}
             </ul>
-            <h2>Monivalintakysymykset</h2>
+            <!-- <h2>Monivalintakysymykset</h2>
             <ul>
                 {% for course in multicourses %}
                 <li><b>{{ course.name }}</b> {{ course.correct }}/{{ course.questions }} pistettä</li>
                 {% endfor %}
-            </ul>
+            </ul> -->
         </section>
         <footer>
             <nav>

@@ -22,36 +22,46 @@ def get_active_courses():
     return courses
 
 def get_statistics_for_all_courses(user_id):
-    sql = """SELECT Q.id,
-                    Q.name,
-                    MAX(COALESCE(X.count,0)) correct,
-                    COUNT(Z.id) questions
-               FROM courses Q
-          LEFT JOIN     (SELECT A.id,
-                                A.name,
-                                COUNT(*)
-                           FROM courses A
-                      LEFT JOIN textquestions B
-                             ON A.id = B.course_id
-                          WHERE B.id
-                             IN    (SELECT B.id
-                                      FROM textquestions B
-                                 LEFT JOIN textanswers C
-                                        ON B.id = C.question_id
-                                     WHERE B.visible = true
-                                       AND user_id = :user_id
-                                       AND B.answer = C.answer
-                                  GROUP BY B.id)
-                       GROUP BY A.id) X
-                 ON Q.id = X.id
-          LEFT JOIN textquestions Z
-                 ON Q.id = Z.course_id
-              WHERE Q.visible = true
-                AND COALESCE(Z.visible, true) = true
-           GROUP BY Q.id"""
-    result = db.session.execute(sql, {"user_id":user_id})
-    answers = result.fetchall()
-    return answers
+    tables = [("textquestions", "textanswers"),
+             ("multiplechoicequestions", "multiplechoiceanswers")]
+    statistics = {}
+    for table in tables:
+        sql = f"""SELECT Q.id,
+                        Q.name,
+                        MAX(COALESCE(X.count,0)) correct,
+                        COUNT(Z.id) questions
+                FROM courses Q
+            LEFT JOIN     (SELECT A.id,
+                                    A.name,
+                                    COUNT(*)
+                            FROM courses A
+                        LEFT JOIN {table[0]} B
+                                ON A.id = B.course_id
+                            WHERE B.id
+                                IN    (SELECT B.id
+                                        FROM {table[0]} B
+                                    LEFT JOIN {table[1]} C
+                                            ON B.id = C.question_id
+                                        WHERE B.visible = true
+                                        AND user_id = :user_id
+                                        AND B.answer = C.answer
+                                    GROUP BY B.id)
+                        GROUP BY A.id) X
+                    ON Q.id = X.id
+            LEFT JOIN {table[0]} Z
+                    ON Q.id = Z.course_id
+                WHERE Q.visible = true
+                    AND COALESCE(Z.visible, true) = true
+            GROUP BY Q.id"""
+        result = db.session.execute(sql, {"user_id":user_id})
+        answers = result.fetchall()
+        for i in answers:
+            if i.name not in statistics:
+                statistics[i.name] = [i.correct, i.questions]
+            else:
+                statistics[i.name][0] += i.correct
+                statistics[i.name][1] += i.questions
+    return statistics
 
 def get_statistics_for_one_course(user_id, course_id):
     sql = """SELECT Q.id,
@@ -215,4 +225,3 @@ def delete_multiquestion(question_id):
     except:
         return False
     return True
-    
