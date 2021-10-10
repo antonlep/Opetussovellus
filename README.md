@@ -42,7 +42,5 @@ Puuttuvia asioita:
 -Käyttöjärjestelmän ulkoasun viimeistely\
 -Virheilmoituksen näyttö jos CRSF tunnistus ei onnistu\
 -Kysymyksien näyttö vain kurssille liittyneille\
--Moneen kysymykseen vastaaminen samalla kertaa\
--Isoja ja pieniä kirjaimia ei huomioitaisi vastauksissa\
--Oikeiden vastausten korostaminen esim. värillä\
+-Oikean vastauksen korostus esim. värillä
 
