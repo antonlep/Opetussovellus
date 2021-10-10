@@ -154,7 +154,6 @@ def add_multiquestion():
             choice3 = request.form["choice3"]
             multianswer = request.form["multianswer"]
             course_id = session["course_id"]
-            print("asdfasdf")
             if questions.add_multiquestion(course_id, multiquestion, choice1,
                                            choice2, choice3, multianswer):
                 return redirect(f"/courses/{course_id}")

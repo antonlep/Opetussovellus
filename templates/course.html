@@ -15,6 +15,7 @@
                 {% else %}
                 <a href="/join_course">Liity kurssille</a>
                 {% endif %}
+                <a href="/">Takaisin</a>
             </nav>
         </header>
         <section>
@@ -66,9 +67,9 @@
             {% else %}
             <p>{{ multiquestion.question}}</p> 
             <form action="/answer_multiquestion" method="post">
-            <input type="radio" name="answer" value="{{ multiquestion.choice1 }}">{{ multiquestion.choice1 }}
-            <input type="radio" name="answer" value="{{ multiquestion.choice2 }}">{{ multiquestion.choice2 }}
-            <input type="radio" name="answer" value="{{ multiquestion.choice3 }}">{{ multiquestion.choice3 }}
+            <input type="radio" name="answer" value=1>{{ multiquestion.choice1 }}
+            <input type="radio" name="answer" value=2>{{ multiquestion.choice2 }}
+            <input type="radio" name="answer" value=3>{{ multiquestion.choice3 }}
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <button type="submit" name="question_id" value="{{ multiquestion.id }}">Vastaa</button>
             </form>
@@ -95,19 +96,17 @@
             <p>Vaihtoehto 1: <input type="text" name="choice1" required minlength="1" required maxlength ="500"></p>
             <p>Vaihtoehto 2: <input type="text" name="choice2" required minlength="1" required maxlength ="500"></p>
             <p>Vaihtoehto 3: <input type="text" name="choice3" required minlength="1" required maxlength ="500""></p>
-            <p>Oikea vaihtoehto: <input type="text" name="multianswer" required minlength="1" required maxlength ="500"></p>
+            <p>Oikea vastaus:</p>
+            <input type="radio" name="multianswer" value=1>Vaihtoehto 1
+            <input type="radio" name="multianswer" value=2>Vaihtoehto 2
+            <input type="radio" name="multianswer" value=3>Vaihtoehto 3
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            <input type="submit" value="Tallenna">
+            <p><input type="submit" value="Tallenna"></p>
             </form>
             {% endif %}
         </section>
         <section>
             <p style="color:red;">{{ message }}</p>
         </section>
-        <footer>
-            <nav>
-            <a href="/">Takaisin</a>
-            </nav>
-        </footer>
     </body>
 </html>
