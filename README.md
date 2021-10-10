@@ -20,12 +20,15 @@ Kurssisivut:
 
 -Tekstikenttä kurssimateriaalia varten\
 -Lista kysymyksiä\
--Kysymyksiin voi tälä hetkellä vastata vain yksi kerrallaan\
+-Kysymyksiin voi vastata vain yksi kerrallaan\
 -Kysymysten alla näkyy pistetilanne\
--Kurssille voi liittyä tai poistua mutta se ei tällä hetkellä tee mitään\
+-Opiskelija voi liittyä tai poistua kurssille\
 -Opettaja voi lisätä kurssimateriaalia kirjoittamalla uusi materiaali kenttään ja tallentamalla\
 -Opettaja voi lisätä ja poistaa kysymyksiä\
 -Opettaja voi poistaa kurssin\
+
+Kurssin tilastot:
+
 -Opettaja näkee kurssille liittyneet opiskelijat ja heidän pisteensä
 
 
@@ -36,11 +39,10 @@ Pistetaulukko:
 
 Puuttuvia asioita:
 
+-Käyttöjärjestelmän ulkoasun viimeistely\
+-Virheilmoituksen näyttö jos CRSF tunnistus ei onnistu\
+-Kysymyksien näyttö vain kurssille liittyneille\
 -Moneen kysymykseen vastaaminen samalla kertaa\
 -Isoja ja pieniä kirjaimia ei huomioitaisi vastauksissa\
 -Oikeiden vastausten korostaminen esim. värillä\
--Kysymyksien näyttö vain kurssille liittyneille\
--Virheilmoitukset kurssisivuilla\
--Käyttöjärjestelmän ulkoasun viimeistely
-
 
