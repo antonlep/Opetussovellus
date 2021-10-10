@@ -47,7 +47,7 @@ CREATE TABLE MultipleChoiceQuestions (
     choice1 TEXT,
     choice2 TEXT,
     choice3 TEXT,
-    answer INTEGER,
+    answer TEXT,
     visible BOOLEAN
 );
 
@@ -55,6 +55,6 @@ CREATE TABLE MultipleChoiceAnswers (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users,
     question_id INTEGER REFERENCES MultipleChoiceQuestions,
-    answer INTEGER,
+    answer TEXT,
     time TIMESTAMP
 );

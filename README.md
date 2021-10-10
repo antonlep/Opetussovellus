@@ -25,18 +25,21 @@ Kurssisivut:
 -Kurssille voi liittyä tai poistua mutta se ei tällä hetkellä tee mitään\
 -Opettaja voi lisätä kurssimateriaalia kirjoittamalla uusi materiaali kenttään ja tallentamalla\
 -Opettaja voi lisätä ja poistaa kysymyksiä\
--Opettaja voi poistaa kurssin
+-Opettaja voi poistaa kurssin\
+-Opettaja näkee kurssille liittyneet opiskelijat ja heidän pisteensä
 
 
 Pistetaulukko:
 
--Lista kursseista ja pisteistä
+-Lista kursseista ja pisteistä yksittäiselle opiskelijalle
 
 
 Puuttuvia asioita:
 
 -Moneen kysymykseen vastaaminen samalla kertaa\
--Tekstimateriaalin parempi muokkaaminen\
+-Isoja ja pieniä kirjaimia ei huomioitaisi vastauksissa\
+-Monivalintakysymysten suoraviivaisempi lisääminen\
+-Oikeiden vastausten korostaminen esim. vihreällä värillä\
 -Virheilmoitukset kurssisivuilla\
 -Käyttöjärjestelmän ulkoasun viimeistely
 

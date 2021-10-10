@@ -45,7 +45,9 @@
             <button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
             </form>
             {% endfor %}
+            {% if course_stats %}
             <p><b>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</b></p>
+            {% endif %}
             {% endif %}
             {% for multiquestion in multiquestions%}
             {% if session.admin %}
@@ -66,7 +68,9 @@
             {% endif %}
             {% endfor %}
             {% if not session.admin %}
+            {% if course_multi_stats %}
             <p><b>Pisteet: {{ course_multi_stats.correct }}/{{ course_multi_stats.questions }}</b></p>
+            {% endif %}
             {% endif %}
         </section>
         <section>
