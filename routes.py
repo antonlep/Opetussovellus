@@ -1,3 +1,4 @@
+import secrets
 from flask import redirect, render_template, request, session
 from app import app
 import users
@@ -92,11 +93,11 @@ def register():
 @app.route("/add_course", methods=["POST"])
 def add_course():
     if users.is_admin():
-        course_name = request.form["course_name"]
-        if courses.add_course(course_name):
-            return redirect("/")
+        if session["csrf_token"] == request.form["csrf_token"]:
+            course_name = request.form["course_name"]
+            if courses.add_course(course_name):
+                return redirect("/")
     return render_template("/", message="Kurssin lisääminen ei onnistu")
-
 
 @app.route("/delete_course")
 def delete_course():
@@ -108,72 +109,80 @@ def delete_course():
 @app.route("/add_textmaterial", methods=["POST"])
 def add_textmaterial():
     if users.is_admin():
-        textmaterial = request.form["textmaterial"]
-        course_id = session["course_id"]
-        if courses.add_textmaterial(course_id, textmaterial):
-            return redirect(f"/courses/{course_id}")
+        if session["csrf_token"] == request.form["csrf_token"]:
+            textmaterial = request.form["textmaterial"]
+            course_id = session["course_id"]
+            if courses.add_textmaterial(course_id, textmaterial):
+                return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Materiaalin lisääminen ei onnistu")
 
 @app.route("/add_textquestion", methods=["POST"])
 def add_textquestion():
     if users.is_admin():
-        textquestion = request.form["textquestion"]
-        textanswer = request.form["textanswer"]
-        course_id = session["course_id"]
-        if questions.add_textquestion(course_id, textquestion, textanswer):
-            return redirect(f"/courses/{course_id}")
+        if session["csrf_token"] == request.form["csrf_token"]:
+            textquestion = request.form["textquestion"]
+            textanswer = request.form["textanswer"]
+            course_id = session["course_id"]
+            if questions.add_textquestion(course_id, textquestion, textanswer):
+                return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Kysymyksen lisääminen ei onnistu")
 
 @app.route("/delete_textquestion", methods=["POST"])
 def delete_textquestion():
     if users.is_admin():
-        course_id = session["course_id"]
-        question_id = request.form["question_id"]
-        if questions.delete_textquestion(question_id):
-            return redirect(f"/courses/{course_id}")
+        if session["csrf_token"] == request.form["csrf_token"]:
+            course_id = session["course_id"]
+            question_id = request.form["question_id"]
+            if questions.delete_textquestion(question_id):
+                return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Kysymyksen poistaminen ei onnistu")
 
 @app.route("/add_multiquestion", methods=["POST"])
 def add_multiquestion():
     if users.is_admin():
-        multiquestion = request.form["multiquestion"]
-        choice1 = request.form["choice1"]
-        choice2 = request.form["choice2"]
-        choice3 = request.form["choice3"]
-        multianswer = request.form["multianswer"]
-        course_id = session["course_id"]
-        if questions.add_multiquestion(course_id, multiquestion, choice1, choice2, choice3, multianswer):
-            return redirect(f"/courses/{course_id}")
+        if session["csrf_token"] == request.form["csrf_token"]:
+            multiquestion = request.form["multiquestion"]
+            choice1 = request.form["choice1"]
+            choice2 = request.form["choice2"]
+            choice3 = request.form["choice3"]
+            multianswer = request.form["multianswer"]
+            course_id = session["course_id"]
+            print("asdfasdf")
+            if questions.add_multiquestion(course_id, multiquestion, choice1, choice2, choice3, multianswer):
+                return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Kysymyksen lisääminen ei onnistu")
 
 @app.route("/delete_multiquestion", methods=["POST"])
 def delete_multiquestion():
     if users.is_admin():
-        course_id = session["course_id"]
-        question_id = request.form["question_id"]
-        if questions.delete_multiquestion(question_id):
-            return redirect(f"/courses/{course_id}")
+        if session["csrf_token"] == request.form["csrf_token"]:
+            course_id = session["course_id"]
+            question_id = request.form["question_id"]
+            if questions.delete_multiquestion(question_id):
+                return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Kysymyksen poistaminen ei onnistu")
 
 @app.route("/answer_multiquestion", methods=["POST"])
 def answer_multiquestion():
-    course_id = session["course_id"]
-    user_id = session["user_id"]
-    question_id = request.form["question_id"]
-    answer = request.form["answer"]
-    if questions.add_multianswer(user_id, question_id, answer):
-        return redirect(f"/courses/{course_id}")
+    if session["csrf_token"] == request.form["csrf_token"]:
+        course_id = session["course_id"]
+        user_id = session["user_id"]
+        question_id = request.form["question_id"]
+        answer = request.form["answer"]
+        if questions.add_multianswer(user_id, question_id, answer):
+            return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Vastaaminen ei onnistu")
 
 @app.route("/answer_textquestion", methods=["POST"])
 def answer_textquestion():
-    course_id = session["course_id"]
-    user_id = session["user_id"]
-    question_id = request.form["question_id"]
-    answer = request.form["textanswer"]
-    if courses.valid_input(answer):
-        if questions.add_textanswer(user_id, question_id, answer):
-            return redirect(f"/courses/{course_id}")
+    if session["csrf_token"] == request.form["csrf_token"]:
+        course_id = session["course_id"]
+        user_id = session["user_id"]
+        question_id = request.form["question_id"]
+        answer = request.form["textanswer"]
+        if courses.valid_input(answer):
+            if questions.add_textanswer(user_id, question_id, answer):
+                return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Vastaaminen ei onnistu")
 
 @app.route("/statistics")

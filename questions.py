@@ -182,6 +182,7 @@ def delete_textquestion(question_id):
     return True
 
 def add_multiquestion(course_id, question, choice1, choice2, choice3, answer):
+    print(course_id, question, choice1, choice2, choice3, answer)
     visible = 'true'
     try:
         sql = """INSERT INTO multiplechoicequestions (course_id, question, choice1, choice2, choice3, answer, visible)

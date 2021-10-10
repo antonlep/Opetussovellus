@@ -21,6 +21,7 @@
             {% if session.admin %}
             <form action="/add_textmaterial" method="post">
             <textarea rows = "10" cols="60" name="textmaterial" required minlength="1" required maxlength ="20000">{{ textmaterial.textmaterial }}</textarea>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <input type="submit" value="Tallenna">
             </form>
             {% else %}
@@ -35,6 +36,7 @@
             {% for textquestion in textquestions%}
             <p><b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}</p>
             <form action="/delete_textquestion" method="post">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <button type="submit" name="question_id" value="{{ textquestion.id }}">Poista</button>
             </form>
             {% endfor %}
@@ -43,6 +45,7 @@
             <p>{{ textquestion.question}}</p> 
             <form action="/answer_textquestion" method="post">
             <input type="text" name="textanswer" required minlength="1" required maxlength ="500">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
             </form>
             {% endfor %}
@@ -56,6 +59,7 @@
                 <b>2:</b> {{ multiquestion.choice2}} <b>3:</b> {{ multiquestion.choice3}}
                 <b>V:</b> {{ multiquestion.answer}}</p>
             <form action="/delete_multiquestion" method="post">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <button type="submit" name="question_id" value="{{ multiquestion.id }}">Poista</button>
             </form>
             {% else %}
@@ -64,6 +68,7 @@
             <input type="radio" name="answer" value="{{ multiquestion.choice1 }}">{{ multiquestion.choice1 }}
             <input type="radio" name="answer" value="{{ multiquestion.choice2 }}">{{ multiquestion.choice2 }}
             <input type="radio" name="answer" value="{{ multiquestion.choice3 }}">{{ multiquestion.choice3 }}
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <button type="submit" name="question_id" value="{{ multiquestion.id }}">Vastaa</button>
             </form>
             {% endif %}
@@ -80,6 +85,7 @@
             <form action="/add_textquestion" method="post">
             <p>Uusi kysymys: <input type="text" name="textquestion" required minlength="1" required maxlength ="500"></p>
             <p>Oikea vastaus: <input type="text" name="textanswer" required minlength="1" required maxlength ="500"></p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <input type="submit" value="Tallenna">
             </form>
             <h2>Lisää uusi monivalintakysymys:</h2>
@@ -87,8 +93,9 @@
             <p>Uusi kysymys: <input type="text" name="multiquestion" required minlength="1" required maxlength ="500"></p>
             <p>Vaihtoehto 1: <input type="text" name="choice1" required minlength="1" required maxlength ="500"></p>
             <p>Vaihtoehto 2: <input type="text" name="choice2" required minlength="1" required maxlength ="500"></p>
-            <p>Vaihtoehto 3: <input type="text" name="choice3 required minlength="1" required maxlength ="500""></p>
+            <p>Vaihtoehto 3: <input type="text" name="choice3" required minlength="1" required maxlength ="500""></p>
             <p>Oikea vaihtoehto: <input type="text" name="multianswer" required minlength="1" required maxlength ="500"></p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <input type="submit" value="Tallenna">
             </form>
             {% endif %}
