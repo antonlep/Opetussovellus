@@ -1,0 +1,34 @@
+<html lang="fi">
+    <head>
+        <title>Tilastot | {{ course.name }} | Opetussovellus</title>
+    </head>
+    <body>
+        <header>
+            <h1>Kurssin opiskelijat ja pisteet</h1>
+        </header>
+        <section>
+            {% if session.admin %}
+            <h2>Tekstikysymykset</h2>
+            <ul>
+                {% for key, value in participant_points.items() %}
+                <li><b>{{ key }}</b> {{ value[2] }}/{{ value[3] }}</li>
+                {% endfor %}
+            </ul>
+            <h2>Monivalintakysymykset</h2>
+            <ul>
+                {% for key, value in participant_multipoints.items() %}
+                <li><b>{{ key }}</b> {{ value[2] }}/{{ value[3] }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+        <section>
+            <p style="color:red;">{{ message }}</p>
+        </section>
+        <footer>
+            <nav>
+            <a href="/courses/{{ course.id }}">Takaisin</a>
+            </nav>
+        </footer>
+    </body>
+</html>

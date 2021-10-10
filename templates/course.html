@@ -8,6 +8,7 @@
             <nav>
                 {% if session.admin %}
                 <a href="/delete_course">Poista kurssi</a>
+                <a href="/courses/{{ course.id }}/statistics">Näytä kurssin tilastot</a>
                 {% elif user_in_course %}
                 <a href="/remove_from_course">Poistu kurssilta</a>
                 {% else %}
@@ -90,16 +91,6 @@
             <p>Oikea vaihtoehto: <input type="text" name="multianswer"></p>
             <input type="submit" value="Tallenna">
             </form>
-            {% endif %}
-        </section>
-        <section>
-            {% if session.admin %}
-            <h2>Kurssin opiskelijat ja pisteet</h2>
-            <ul>
-                {% for key, value in participant_points.items() %}
-                <li><b>{{ key }}</b> {{ value[2] }}/{{ value[3] }}</li>
-                {% endfor %}
-            </ul>
             {% endif %}
         </section>
         <section>

@@ -13,9 +13,6 @@ def index():
 def course_pages(course_id):
     user_id = session["user_id"]
     course=courses.get_course(course_id)
-    participants=courses.get_course_participants(course_id)
-    points = {i[1]:questions.get_statistics_for_one_course(i[0], course_id) for i in participants}
-    print(points)
     if course:
         return render_template(
             "course.html",
@@ -25,8 +22,22 @@ def course_pages(course_id):
             multiquestions=questions.get_active_multiquestions(course_id),
             course_stats=questions.get_statistics_for_one_course(user_id, course_id),
             course_multi_stats=questions.get_multistatistics_for_one_course(user_id, course_id),
-            user_in_course=courses.check_if_user_in_course(user_id, course_id),
-            participant_points=points)
+            user_in_course=courses.check_if_user_in_course(user_id, course_id))
+    return render_template("error.html", message="Kurssia ei löydy")
+
+@app.route("/courses/<int:course_id>/statistics")
+def course_statistics(course_id):
+    user_id = session["user_id"]
+    course=courses.get_course(course_id)
+    participants=courses.get_course_participants(course_id)
+    points = {i[1]:questions.get_statistics_for_one_course(i[0], course_id) for i in participants}
+    multipoints = {i[1]:questions.get_multistatistics_for_one_course(i[0], course_id) for i in participants}
+    if course:
+        return render_template(
+            "course_statistics.html",
+            course=course,
+            participant_points=points,
+            participant_multipoints=multipoints)
     return render_template("error.html", message="Kurssia ei löydy")
 
 @app.route("/join_course")
