@@ -1,4 +1,3 @@
-import secrets
 from flask import redirect, render_template, request, session
 from app import app
 import users
@@ -28,11 +27,11 @@ def course_pages(course_id):
 
 @app.route("/courses/<int:course_id>/statistics")
 def course_statistics(course_id):
-    user_id = session["user_id"]
     course=courses.get_course(course_id)
     participants=courses.get_course_participants(course_id)
     points = {i[1]:questions.get_statistics_for_one_course(i[0], course_id) for i in participants}
-    multipoints = {i[1]:questions.get_multistatistics_for_one_course(i[0], course_id) for i in participants}
+    multipoints = {i[1]:questions.get_multistatistics_for_one_course(i[0], course_id)
+                   for i in participants}
     if course:
         return render_template(
             "course_statistics.html",
@@ -65,7 +64,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if not users.valid_input(username) or not users.valid_input(password):
-            return render_template("login.html", message="Käyttäjätunnus tai salasana ei kelpaa") 
+            return render_template("login.html", message="Käyttäjätunnus tai salasana ei kelpaa")
         if users.login(username, password):
             return redirect("/")
         return render_template("login.html", message="Väärä tunnus tai salasana")
@@ -81,7 +80,7 @@ def register():
         teacher = request.form.getlist("teacher")
         if (not users.valid_input(username) or not users.valid_input(password1)
             or not users.valid_input(password2)):
-            return render_template("register.html", message="Käyttäjätunnus tai salasana ei kelpaa") 
+            return render_template("register.html", message="Käyttäjätunnus tai salasana ei kelpaa")
         if users.check(username):
             return render_template("register.html", message="Käyttäjätunnus on jo olemassa")
         if password1 != password2:
@@ -148,7 +147,8 @@ def add_multiquestion():
             multianswer = request.form["multianswer"]
             course_id = session["course_id"]
             print("asdfasdf")
-            if questions.add_multiquestion(course_id, multiquestion, choice1, choice2, choice3, multianswer):
+            if questions.add_multiquestion(course_id, multiquestion, choice1,
+                                           choice2, choice3, multianswer):
                 return redirect(f"/courses/{course_id}")
     return render_template("error.html", message="Kysymyksen lisääminen ei onnistu")
 
@@ -188,7 +188,8 @@ def answer_textquestion():
 @app.route("/statistics")
 def statistics():
     user_id = session["user_id"]
-    return render_template("statistics.html", textcourses = questions.get_statistics_for_all_courses(user_id),
+    return render_template("statistics.html",
+                           textcourses = questions.get_statistics_for_all_courses(user_id),
                            multicourses = questions.get_multistatistics_for_all_courses(user_id))
 
 @app.route("/logout")

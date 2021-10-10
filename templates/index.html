@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="fi">
     <head>
         <title>Aloitussivu | Opetussovellus</title>
@@ -41,6 +42,7 @@
             <p>Lisää kurssi:</p>
             <form action="/add_course" method="post">
             Kurssin nimi: <input type="text" name="course_name">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <input type="submit" value="Lisää">
             </form>
             {% endif %}

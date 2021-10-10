@@ -1,8 +1,8 @@
 from flask import session
 from db import db
 
-def valid_input(input):
-    return 1 <= len(input) <= 500
+def valid_input(inp):
+    return 1 <= len(inp) <= 500
 
 def get_active_courses():
     sql = "SELECT id, name, visible FROM courses WHERE visible = true"

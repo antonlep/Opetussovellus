@@ -10,8 +10,8 @@ def user_id():
 def is_admin():
     return session.get("admin", 'false')
 
-def valid_input(input):
-    return 1 <= len(input) <= 50
+def valid_input(inp):
+    return 1 <= len(inp) <= 50
 
 def check(username):
     sql = "SELECT id FROM users WHERE username=:username"

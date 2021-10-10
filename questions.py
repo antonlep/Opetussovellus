@@ -8,7 +8,8 @@ def get_active_textquestions(course_id):
     return questions
 
 def get_active_multiquestions(course_id):
-    sql = """SELECT id, question, choice1, choice2, choice3, answer FROM multiplechoicequestions WHERE course_id=:course_id
+    sql = """SELECT id, question, choice1, choice2, choice3, answer
+             FROM multiplechoicequestions WHERE course_id=:course_id
              AND visible=true"""
     result = db.session.execute(sql, {"course_id":course_id})
     questions = result.fetchall()
@@ -185,10 +186,12 @@ def add_multiquestion(course_id, question, choice1, choice2, choice3, answer):
     print(course_id, question, choice1, choice2, choice3, answer)
     visible = 'true'
     try:
-        sql = """INSERT INTO multiplechoicequestions (course_id, question, choice1, choice2, choice3, answer, visible)
+        sql = """INSERT INTO multiplechoicequestions
+                 (course_id, question, choice1, choice2, choice3, answer, visible)
                  VALUES (:course_id, :question, :choice1, :choice2, :choice3, :answer, :visible)"""
         db.session.execute(sql, {"course_id":course_id, "question":question, "choice1":choice1,
-                                 "choice2":choice2, "choice3":choice3, "answer":answer, "visible":visible})
+                                 "choice2":choice2, "choice3":choice3, "answer":answer,
+                                 "visible":visible})
         db.session.commit()
     except:
         return False
@@ -212,3 +215,4 @@ def delete_multiquestion(question_id):
     except:
         return False
     return True
+    
