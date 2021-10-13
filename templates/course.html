@@ -43,6 +43,7 @@
             </form>
             {% endfor %}
             {% else %}
+            {% if user_in_course %}
             {% for textquestion in textquestions%}
             <p>{{ textquestion.question}}</p> 
             <form action="/answer_textquestion" method="post">
@@ -53,6 +54,9 @@
             {% endfor %}
             {% if course_stats.questions %}
             <p><b>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</b></p>
+            {% endif %}
+            {% else %}
+            Liity kurssille nähdäksesi kysymykset
             {% endif %}
             {% endif %}
             {% for multiquestion in multiquestions%}
