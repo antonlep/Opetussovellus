@@ -1,54 +1,68 @@
 <!DOCTYPE html>
 <html lang="fi">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <title>Aloitussivu | Opetussovellus</title>
     </head>
     <body>
-        <header>
-            <h1>Opetussovellus</h1>
-            <p>Tervetuloa!</p>
-            {% if session.user_id %} 
-            <p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
-            <nav>
+        <div class="container">
+            <nav class="navbar navbar-expand-sm navbar-light">
+              <a class="navbar-brand" href="#">Opetussovellus</a>
+              <ul class="navbar-nav">
+                {% if session.user_id %}
                 {% if not session.admin %}
-                <a href="/statistics">Pistetaulukko</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="/statistics">Pistetaulukko</a>
+                </li>
                 {% endif %}
-                <a href="/logout">Kirjaudu ulos</a>
-            </nav>
-            {% else %}
-            <p>Kirjaudu sisään nähdäksesi kurssien sisällön.</p>
-            <nav>
-                <a href="/login">Kirjaudu sisään</a>
-                <a href="/register">Rekisteröidy</a>
-            </nav>
-            {% endif %}
-        </header>
-        <section>
-            {% if courses %}
-            <h2>Kurssit</h2>
-            {% endif %}
-            <ul>
-                {% for course in courses %}
-                {% if session.user_id %} 
-                <li><a href="/courses/{{ course.id }}">{{ course.name }}</a></li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">Kirjaudu ulos</a>
+                </li>
                 {% else %}
-                <li>{{ course.name }}</li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/login">Kirjaudu sisään</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Rekisteröidy</a>
+                </li>
                 {% endif %}
-                {% endfor %}
-            </ul>
-        </section>
-        <section>
-            {% if session.admin %}
-            <p>Lisää kurssi:</p>
-            <form action="/add_course" method="post">
-            Kurssin nimi: <input type="text" name="course_name">
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            <input type="submit" value="Lisää">
-            </form>
-            {% endif %}
-        </section>
-        <section>
-            <p style="color:red;">{{ message }}</p>
-        </section>
+              </ul>
+            </nav>
+            <div class="row">
+              <div class="col-8">
+                    {% if session.user_id %} 
+                    <p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
+                    {% else %}
+                    <p>Kirjaudu sisään nähdäksesi kurssien sisällön.</p>
+                    {% endif %}
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    {% if courses %}
+                    <h2>Kurssit</h2>
+                    {% endif %}
+                    <ul>
+                        {% for course in courses %}
+                        {% if session.user_id %} 
+                        <li><a href="/courses/{{ course.id }}">{{ course.name }}</a></li>
+                        {% else %}
+                        <li>{{ course.name }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% if session.admin %}
+                    <p>Lisää kurssi:</p>
+                    <form action="/add_course" method="post">
+                    Kurssin nimi: <input type="text" name="course_name">
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                    <input type="submit" value="Lisää">
+                    </form>
+                    {% endif %}
+                    <p style="color:red;">{{ message }}</p>
+                </div>
+              </div>
+        </div>
     </body>
 </html>

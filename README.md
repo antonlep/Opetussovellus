@@ -41,6 +41,5 @@ Puuttuvia asioita:
 
 -Käyttöjärjestelmän ulkoasun viimeistely\
 -Virheilmoituksen näyttö jos CRSF tunnistus ei onnistu\
--Kysymyksien näyttö vain kurssille liittyneille\
 -Oikean vastauksen korostus esim. värillä
 
