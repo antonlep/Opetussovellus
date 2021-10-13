@@ -1,24 +1,40 @@
 <!DOCTYPE html>
 <html lang="fi">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <title>{{ course.name }} | Opetussovellus</title>
     </head>
     <body>
-        <header>
-            <h1>{{ course.name }}</h1>
-            <nav>
+        <div class="container">
+            <header>
+            <nav class="navbar navbar-expand-sm navbar-light">
+              <a class="navbar-brand" href="/">Opetussovellus</a>
+              <ul class="navbar-nav">
                 {% if session.admin %}
-                <a href="/delete_course">Poista kurssi</a>
-                <a href="/courses/{{ course.id }}/statistics">Näytä kurssin tilastot</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="/delete course">Poista kurssi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/courses/{{ course.id }}/statistics">Näytä kurssin tilastot</a>
+                  </li>
                 {% elif user_in_course %}
-                <a href="/remove_from_course">Poistu kurssilta</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="/remove_from_course">Poistu kurssilta</a>
+                </li>
                 {% else %}
-                <a href="/join_course">Liity kurssille</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="/join_course">Liity kurssille</a>
+                </li>
                 {% endif %}
-                <a href="/">Takaisin</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Takaisin</a>
+                </li>
+              </ul>
             </nav>
         </header>
         <section>
+            <h1>{{ course.name }}</h1>
             <h2>Kurssimateriaali</h2>
             {% if session.admin %}
             <form action="/add_textmaterial" method="post">
@@ -55,10 +71,6 @@
             {% if course_stats.questions %}
             <p><b>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</b></p>
             {% endif %}
-            {% else %}
-            Liity kurssille nähdäksesi kysymykset
-            {% endif %}
-            {% endif %}
             {% for multiquestion in multiquestions%}
             {% if session.admin %}
             <p><b>K:</b> {{ multiquestion.question}} <b>1:</b> {{ multiquestion.choice1}}
@@ -82,6 +94,10 @@
             {% if not session.admin %}
             {% if course_multi_stats.questions %}
             <p><b>Pisteet: {{ course_multi_stats.correct }}/{{ course_multi_stats.questions }}</b></p>
+            {% endif %}
+            {% endif %}
+            {% else %}
+            Liity kurssille nähdäksesi kysymykset
             {% endif %}
             {% endif %}
         </section>
@@ -111,6 +127,6 @@
         </section>
         <section>
             <p style="color:red;">{{ message }}</p>
-        </section>
+        </div>
     </body>
 </html>
