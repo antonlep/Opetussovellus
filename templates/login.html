@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="fi">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <title>Kirjaudu sisään | Opetussovellus</title>
     </head>
     <body>
-        <header>
+        <div class="container">
+            <header>
+            <nav class="navbar navbar-expand-sm navbar-light">
+              <a class="navbar-brand" href="/">Opetussovellus</a>
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Rekisteröidy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Takaisin</a>
+                </li>
+              </ul>
+            </nav>
             <h1>Kirjaudu sisään</h1>
         </header>
         <section>
@@ -17,11 +31,6 @@
         <section>
             <p style="color:red;">{{ message }}</p>
         </section>
-        <footer>
-            <nav>
-                <a href="/register">Rekisteröidy</a>
-                <a href="/">Takaisin</a>
-            </nav>
-        </footer>
+        </nav>
     </body>
 </html>
