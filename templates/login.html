@@ -1,36 +1,15 @@
-<!DOCTYPE html>
-<html lang="fi">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <title>Kirjaudu sisään | Opetussovellus</title>
-    </head>
-    <body>
-        <div class="container">
-            <header>
-            <nav class="navbar navbar-expand-sm navbar-light">
-              <a class="navbar-brand" href="/">Opetussovellus</a>
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Rekisteröidy</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Takaisin</a>
-                </li>
-              </ul>
-            </nav>
-            <h1>Kirjaudu sisään</h1>
-        </header>
-        <section>
-            <form action="/login" method="post">
-            <p>Tunnus: <input type="text" name="username" required minlength="1" required maxlength ="50"></p>
-            <p>Salasana: <input type="password" name="password" required minlength="1" required maxlength ="50"></p>
-            <input type="submit" value="Kirjaudu">
-            </form>
-        </section>
-        <section>
-            <p style="color:red;">{{ message }}</p>
-        </section>
-        </nav>
-    </body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Kirjaudu sisään{% endblock %}
+{% block content %}
+<h1>Kirjaudu sisään</h1>
+<section>
+    <form action="/login" method="post">
+    <p>Tunnus: <input type="text" name="username" required minlength="1" required maxlength ="50"></p>
+    <p>Salasana: <input type="password" name="password" required minlength="1" required maxlength ="50"></p>
+    <input type="submit" value="Kirjaudu">
+    </form>
+</section>
+<section>
+    <p style="color:red;">{{ message }}</p>
+</section>
+{% endblock %}

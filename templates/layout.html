@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fi">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <title>{% block title %}{% endblock %} | Opetussovellus</title>
+    </head>
+    <body>
+        <header>
+        <div class="container">
+            <nav class="navbar navbar-expand-sm navbar-light">
+              <a class="navbar-brand" href="/">Opetussovellus</a>
+              <ul class="navbar-nav">
+                {% if session.user_id %}
+                <div class="text-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Kirjaudu ulos</a>
+                    </li>
+                </div>
+                {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/login">Kirjaudu sisään</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Rekisteröidy</a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+            </div>
+        </header>
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-8">
+                            {% if session.user_id %} 
+                            <p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
+                            {% else %}
+                            <p>Kirjaudu sisään nähdäksesi kurssien sisällön.</p>
+                            {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

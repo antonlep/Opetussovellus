@@ -1,35 +1,31 @@
-<!DOCTYPE html>
-<html lang="fi">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <title>Tilastot | {{ course.name }} | Opetussovellus</title>
-    </head>
-    <body>
-        <div class="container">
-            <header>
-            <nav class="navbar navbar-expand-sm navbar-light">
-              <a class="navbar-brand" href="/">Opetussovellus</a>
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/courses/{{ course.id }}">Takaisin</a>
-                </li>
-              </ul>
-            </nav>
-            <h1>Kurssin opiskelijat ja pisteet</h1>
-        </header>
-        <section>
-            {% if session.admin %}
-            <ul>
-                {% for key, value in participant_points.items() %}
-                <li><b>{{ key }}</b> {{ value[0] }}/{{ value[1] }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </section>
-        <section>
-            <p style="color:red;">{{ message }}</p>
-        </section>
-        </nav>
-    </body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Tilastot | {{ course.name }}{% endblock %}
+{% block content %}
+<h2>{{ course.name }}</h2>
+<nav>
+    <ul>
+        <li class="nav-item">
+            <a class="nav-link" href="/courses/{{ course.id }}">Kurssimateriaali</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/courses/{{ course.id }}/statistics">Kurssin tilastot</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/delete_course">Poista kurssi</a>
+        </li>
+    </ul>
+</nav>
+<section>
+    Kurssin opiskelijat ja pisteet
+    {% if session.admin %}
+    <ul>
+        {% for key, value in participant_points.items() %}
+        <li><b>{{ key }}</b> {{ value[0] }}/{{ value[1] }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</section>
+<section>
+    <p style="color:red;">{{ message }}</p>
+</section>
+{% endblock %}

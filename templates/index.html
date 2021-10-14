@@ -1,68 +1,26 @@
-<!DOCTYPE html>
-<html lang="fi">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <title>Aloitussivu | Opetussovellus</title>
-    </head>
-    <body>
-        <div class="container">
-            <nav class="navbar navbar-expand-sm navbar-light">
-              <a class="navbar-brand" href="/">Opetussovellus</a>
-              <ul class="navbar-nav">
-                {% if session.user_id %}
-                {% if not session.admin %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/statistics">Pistetaulukko</a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/logout">Kirjaudu ulos</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/login">Kirjaudu sisään</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Rekisteröidy</a>
-                </li>
-                {% endif %}
-              </ul>
-            </nav>
-            <div class="row">
-              <div class="col-8">
-                    {% if session.user_id %} 
-                    <p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
-                    {% else %}
-                    <p>Kirjaudu sisään nähdäksesi kurssien sisällön.</p>
-                    {% endif %}
-              </div>
-            </div>
-            <div class="row">
-                <div class="col-8">
-                    {% if courses %}
-                    <h2>Kurssit</h2>
-                    {% endif %}
-                    <ul>
-                        {% for course in courses %}
-                        {% if session.user_id %} 
-                        <li><a href="/courses/{{ course.id }}">{{ course.name }}</a></li>
-                        {% else %}
-                        <li>{{ course.name }}</li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
-                    {% if session.admin %}
-                    <p>Lisää kurssi:</p>
-                    <form action="/add_course" method="post">
-                    Kurssin nimi: <input type="text" name="course_name">
-                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-                    <input type="submit" value="Lisää">
-                    </form>
-                    {% endif %}
-                    <p style="color:red;">{{ message }}</p>
-                </div>
-              </div>
-        </div>
-    </body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Aloitussivu{% endblock %}
+{% block content %}
+  {% if courses %}
+  <h2>Kurssit</h2>
+  {% endif %}
+  <ul>
+      {% for course in courses %}
+      {% if session.user_id %} 
+      <li><a href="/courses/{{ course.id }}">{{ course.name }}</a></li>
+      {% else %}
+      <li>{{ course.name }}</li>
+      {% endif %}
+      {% endfor %}
+  </ul>
+  {% if session.admin %}
+  <h2>Lisää kurssi:</h2>
+  <form action="/add_course" method="post">
+  Kurssin nimi: <input type="text" name="course_name">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  <input type="submit" value="Lisää">
+  <p style="color:red;">{{ message }}</p>
+  {% elif session.user_id %}
+  <h2><a href="/statistics">Pistetaulukko</a></h2>
+  {% endif %}
+{% endblock %}
