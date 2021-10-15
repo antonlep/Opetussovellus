@@ -7,41 +7,32 @@
     </head>
     <body>
         <header>
-        <div class="container">
-            <nav class="navbar navbar-expand-sm navbar-light">
-              <a class="navbar-brand" href="/">Opetussovellus</a>
-              <ul class="navbar-nav">
-                {% if session.user_id %}
-                <div class="text-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Kirjaudu ulos</a>
-                    </li>
-                </div>
-                {% else %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/login">Kirjaudu sisään</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Rekisteröidy</a>
-                </li>
-                {% endif %}
-              </ul>
-            </nav>
+            <div class="container">
+                <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+                    <a class="navbar-brand" href="/">Opetussovellus</a>
+                    {% if session.user_id %}
+                    <ul class="navbar-nav mx-auto">
+                        <span class="navbar-text">
+                            {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}
+                        </span>
+                    </ul>
+                    <a class ="btn btn-outline-light" href="/logout">Kirjaudu ulos</a>
+                    {% else %}
+                    <ul class="navbar-nav mx-auto">
+                        <span class="navbar-text">
+                            Kirjaudu sisään nähdäksesi kurssien sisällön.
+                        </span>
+                    </ul>
+                    <a class ="btn btn-outline-light" href="/login">Kirjaudu sisään</a>
+                    <a class ="btn btn-outline-light" href="/logout">Rekisteröidy</a>
+                    {% endif %}
+                </nav>
             </div>
         </header>
         <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-8">
-                            {% if session.user_id %} 
-                            <p>Olet kirjautunut sisään. {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}</p>
-                            {% else %}
-                            <p>Kirjaudu sisään nähdäksesi kurssien sisällön.</p>
-                            {% endif %}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
+                    <div class="col-md">
                         {% block content %}{% endblock %}
                     </div>
                 </div>

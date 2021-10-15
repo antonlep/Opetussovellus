@@ -2,17 +2,17 @@
 {% block title %}Aloitussivu{% endblock %}
 {% block content %}
   {% if courses %}
-  <h2>Kurssit</h2>
+  <!-- <h2>Kurssit</h2> -->
   {% endif %}
-  <ul>
+  <div class="list-group">
       {% for course in courses %}
       {% if session.user_id %} 
-      <li><a href="/courses/{{ course.id }}">{{ course.name }}</a></li>
+      <a href="/courses/{{ course.id }}", class="list-group-item list-group-item-action">{{ course.name }}</a>
       {% else %}
-      <li>{{ course.name }}</li>
+      <a href="#" class="list-group-item list-group-item-action disabled">{{ course.name }}</a>
       {% endif %}
       {% endfor %}
-  </ul>
+  </div>
   {% if session.admin %}
   <h2>Lisää kurssi:</h2>
   <form action="/add_course" method="post">
