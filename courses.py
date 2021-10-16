@@ -5,7 +5,7 @@ def valid_input(inp):
     return 1 <= len(inp) <= 500
 
 def get_active_courses():
-    sql = "SELECT id, name, visible FROM courses WHERE visible = true"
+    sql = "SELECT id, name, visible FROM courses WHERE visible = true ORDER BY id"
     result = db.session.execute(sql)
     courses = result.fetchall()
     return courses

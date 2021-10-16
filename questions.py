@@ -52,15 +52,16 @@ def get_statistics_for_all_courses(user_id):
                     ON Q.id = Z.course_id
                 WHERE Q.visible = true
                     AND COALESCE(Z.visible, true) = true
-            GROUP BY Q.id"""
+            GROUP BY Q.id
+            ORDER BY Q.id"""
         result = db.session.execute(sql, {"user_id":user_id})
         answers = result.fetchall()
         for i in answers:
-            if i.name not in statistics:
-                statistics[i.name] = [i.correct, i.questions]
+            if i.id not in statistics:
+                statistics[i.id] = [i.correct, i.questions, i.name]
             else:
-                statistics[i.name][0] += i.correct
-                statistics[i.name][1] += i.questions
+                statistics[i.id][0] += i.correct
+                statistics[i.id][1] += i.questions
     return statistics
 
 def get_statistics_for_one_course(user_id, course_id):

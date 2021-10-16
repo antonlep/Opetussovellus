@@ -6,8 +6,10 @@ import questions
 
 @app.route("/")
 def index():
+    user_id = users.user_id()
     course_list = courses.get_active_courses()
-    return render_template("index.html", courses=course_list)
+    return render_template("index.html", courses=course_list,
+                           statistics=questions.get_statistics_for_all_courses(user_id))
 
 @app.route("/courses/<int:course_id>")
 def course_pages(course_id):
