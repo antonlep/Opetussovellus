@@ -88,6 +88,7 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         teacher = request.form.getlist("teacher")
+        print(username, password1, password2, teacher)
         if (not users.valid_input(username) or not users.valid_input(password1)
             or not users.valid_input(password2)):
             return render_template("register.html", message="Käyttäjätunnus tai salasana ei kelpaa")

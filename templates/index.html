@@ -5,29 +5,44 @@
       {% if session.user_id %} 
       {% if session.admin %}
       {% for k, v in statistics.items() %}
-      <h5><a href="/courses/{{ k }}", class="list-group-item list-group-item-action"><b>{{ v[2] }}</b></a></h5>
+      <a href="/courses/{{ k }}" class="list-group-item list-group-item-action flex-column align-items-start active bg-light">
+        <div class="d-flex w-100 justify-content-between ">
+          <h3 class="text-dark">{{ v[2] }}</h3>
+        </div>
+      </a>
       {% endfor %}
       {% else %}
       {% for k, v in statistics.items() %}
-      <h5><a href="/courses/{{ k }}", class="list-group-item list-group-item-action"><b>{{ v[2] }}</b> {{ v[0] }}/{{ v[1] }} pistettä</a></h5>
+      <a href="/courses/{{ k }}" class="list-group-item list-group-item-action flex-column align-items-start active bg-light">
+        <div class="d-flex w-100 justify-content-between ">
+          <h3 class="text-dark">{{ v[2] }}</h3>
+          <medium class="text-dark">{{ v[0] }}/{{ v[1] }} pistettä</medium>
+        </div>
+      </a>
       {% endfor %}
       {% endif %}
       {% else %}
       {% for course in courses %}
-      <h5><a href="#" class="list-group-item list-group-item-action disabled"><b>{{ course.name }}</b></a></h5>
+      <a href="{{ course.name }}" class="list-group-item list-group-item-action disabled flex-column align-items-start active bg-light">
+        <div class="d-flex w-100 justify-content-between ">
+          <h3 class="text-dark">{{ course.name }}</h3>
+        </div>
+      </a>
       {% endfor %}
       {% endif %}
   </div>
   {% if session.admin %}
   <p>
-  <h4>Lisää kurssi:</h4>
-  <form action="/add_course" method="post">
-    <div class="form-group">
-      <input type="text" class="form-control-lg" name="course_name">
-    </div>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <button type="submit" class="btn btn-primary">Lisää</button>
-  </form>
+  <div class = "col-md-4">
+    <form action="/add_course" method="post">
+      <div class="form-group">
+        <labe>Lisää kurssi</labe>
+        <input type="text" class="form-control name="course_name" required minlength="1" required maxlength ="50">
+      </div>
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      <button type="submit" class="btn btn-primary">Lisää</button>
+    </form>
+  </div>
   </p>
   {% endif %}
   <p style="color:red;">{{ message }}</p>
