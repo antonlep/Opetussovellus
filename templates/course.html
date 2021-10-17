@@ -1,32 +1,21 @@
 {% extends "layout.html" %}
 {% block title %}{{ course.name }}{% endblock %}
 {% block content %}
-<h2>{{ course.name }}</h2>
-<nav>
-  <ul>
+<h1 class="text-center">{{ course.name }}</h1>
+<nav class="text-center">
     {% if session.admin %}
-    <li class="nav-item">
-      <a class="nav-link" href="/courses/{{ course.id }}">Kurssimateriaali</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/courses/{{ course.id }}/statistics">Kurssin tilastot</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/delete_course">Poista kurssi</a>
-    </li>
+      <a class="btn btn-outline-primary" href="/courses/{{ course.id }}" role="button">Kurssisivu</a>
+      <a class="btn btn-outline-primary" href="/courses/{{ course.id }}/statistics" role="button">Kurssin tilastot</a>
+      <a class="btn btn-outline-danger" href="/delete_course" role="button">Poista kurssi</a>
     {% elif user_in_course %}
-    <li class="nav-item">
-      <a class="nav-link" href="/remove_from_course">Poistu kurssilta</a>
-    </li>
+    <a class="btn btn-outline-primary" href="/remove_from_course" role="button">Poistu kurssilta</a>
     {% else %}
-    <li class="nav-item">
-      <a class="nav-link" href="/join_course">Liity kurssille</a>
-    </li>
+    <a class="btn btn-outline-primary" href="/join_course" role="button">Liity kurssille</a>
     {% endif %}
   </ul>
 </nav>
 <section>
-    <h2>Kurssimateriaali</h2>
+    <h3>Kurssimateriaali</h3>
     {% if session.admin %}
     <form action="/add_textmaterial" method="post">
     <textarea rows = "10" cols="60" name="textmaterial" required minlength="1" required maxlength ="20000">{{ textmaterial.textmaterial }}</textarea>
@@ -40,7 +29,7 @@
     {% endif %}
 </section>
 <section>
-    <h2>Kysymykset</h2>
+    <h3>Kysymykset</h3>
     {% if session.admin %}
     {% for textquestion in textquestions%}
     <p><b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}</p>
@@ -94,14 +83,14 @@
 </section>
 <section>
     {% if session.admin %}
-    <h2>Lisää uusi tekstikysymys:</h2>
+    <h3>Lisää uusi tekstikysymys:</h3>
     <form action="/add_textquestion" method="post">
     <p>Uusi kysymys: <input type="text" name="textquestion" required minlength="1" required maxlength ="500"></p>
     <p>Oikea vastaus: <input type="text" name="textanswer" required minlength="1" required maxlength ="500"></p>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <input type="submit" value="Tallenna">
     </form>
-    <h2>Lisää uusi monivalintakysymys:</h2>
+    <h3>Lisää uusi monivalintakysymys:</h3>
     <form action="/add_multiquestion" method="post">
     <p>Uusi kysymys: <input type="text" name="multiquestion" required minlength="1" required maxlength ="500"></p>
     <p>Vaihtoehto 1: <input type="text" name="choice1" required minlength="1" required maxlength ="500"></p>

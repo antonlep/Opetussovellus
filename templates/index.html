@@ -7,7 +7,7 @@
       {% for k, v in statistics.items() %}
       <a href="/courses/{{ k }}" class="list-group-item list-group-item-action flex-column align-items-start active bg-light">
         <div class="d-flex w-100 justify-content-between ">
-          <h3 class="text-dark">{{ v[2] }}</h3>
+          <h1 class="text-dark">{{ v[2] }}</h1>
         </div>
       </a>
       {% endfor %}
@@ -15,7 +15,7 @@
       {% for k, v in statistics.items() %}
       <a href="/courses/{{ k }}" class="list-group-item list-group-item-action flex-column align-items-start active bg-light">
         <div class="d-flex w-100 justify-content-between ">
-          <h3 class="text-dark">{{ v[2] }}</h3>
+          <h1 class="text-dark">{{ v[2] }}</h1>
           <medium class="text-dark">{{ v[0] }}/{{ v[1] }} pistettä</medium>
         </div>
       </a>
@@ -25,7 +25,7 @@
       {% for course in courses %}
       <a href="{{ course.name }}" class="list-group-item list-group-item-action disabled flex-column align-items-start active bg-light">
         <div class="d-flex w-100 justify-content-between ">
-          <h3 class="text-dark">{{ course.name }}</h3>
+          <h1 class="text-dark">{{ course.name }}</h1>
         </div>
       </a>
       {% endfor %}
