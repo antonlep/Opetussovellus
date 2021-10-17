@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}{{ course.name }}{% endblock %}
 {% block content %}
-<h1 class="text-center">{{ course.name }}</h1>
-<nav class="text-center">
+  <div class="row justify-content-md-center">
+<h1>{{ course.name }}</h1>
+  </div>
+  <div class="row justify-content-md-center">
+<nav>
     {% if session.admin %}
       <a class="btn btn-outline-primary" href="/courses/{{ course.id }}" role="button">Kurssisivu</a>
       <a class="btn btn-outline-primary" href="/courses/{{ course.id }}/statistics" role="button">Kurssin tilastot</a>
@@ -14,95 +17,100 @@
     {% endif %}
   </ul>
 </nav>
-<section>
-    <h3>Kurssimateriaali</h3>
-    {% if session.admin %}
-    <form action="/add_textmaterial" method="post">
-    <textarea rows = "10" cols="60" name="textmaterial" required minlength="1" required maxlength ="20000">{{ textmaterial.textmaterial }}</textarea>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <input type="submit" value="Tallenna">
-    </form>
-    {% else %}
-    <article>
-        {{ textmaterial.textmaterial }}
-    </article>
-    {% endif %}
-</section>
-<section>
-    <h3>Kysymykset</h3>
-    {% if session.admin %}
-    {% for textquestion in textquestions%}
-    <p><b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}</p>
-    <form action="/delete_textquestion" method="post">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <button type="submit" name="question_id" value="{{ textquestion.id }}">Poista</button>
-    </form>
-    {% endfor %}
-    {% else %}
-    {% if user_in_course %}
-    {% for textquestion in textquestions%}
-    <p>{{ textquestion.question}}</p> 
-    <form action="/answer_textquestion" method="post">
-    <input type="text" name="textanswer" required minlength="1" required maxlength ="500">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
-    </form>
-    {% endfor %}
-    {% if course_stats.questions %}
-    <p><b>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</b></p>
-    {% endif %}
-    {% for multiquestion in multiquestions%}
-    {% if session.admin %}
-    <p><b>K:</b> {{ multiquestion.question}} <b>1:</b> {{ multiquestion.choice1}}
-        <b>2:</b> {{ multiquestion.choice2}} <b>3:</b> {{ multiquestion.choice3}}
-        <b>V:</b> {{ multiquestion.answer}}</p>
-    <form action="/delete_multiquestion" method="post">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <button type="submit" name="question_id" value="{{ multiquestion.id }}">Poista</button>
-    </form>
-    {% else %}
-    <p>{{ multiquestion.question}}</p> 
-    <form action="/answer_multiquestion" method="post">
-    <input type="radio" name="answer" value=1>{{ multiquestion.choice1 }}
-    <input type="radio" name="answer" value=2>{{ multiquestion.choice2 }}
-    <input type="radio" name="answer" value=3>{{ multiquestion.choice3 }}
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <button type="submit" name="question_id" value="{{ multiquestion.id }}">Vastaa</button>
-    </form>
-    {% endif %}
-    {% endfor %}
-    {% if not session.admin %}
-    {% if course_multi_stats.questions %}
-    <p><b>Pisteet: {{ course_multi_stats.correct }}/{{ course_multi_stats.questions }}</b></p>
-    {% endif %}
-    {% endif %}
-    {% else %}
-    Liity kurssille nähdäksesi kysymykset
-    {% endif %}
-    {% endif %}
-</section>
-<section>
-    {% if session.admin %}
-    <h3>Lisää uusi tekstikysymys:</h3>
-    <form action="/add_textquestion" method="post">
-    <p>Uusi kysymys: <input type="text" name="textquestion" required minlength="1" required maxlength ="500"></p>
-    <p>Oikea vastaus: <input type="text" name="textanswer" required minlength="1" required maxlength ="500"></p>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <input type="submit" value="Tallenna">
-    </form>
-    <h3>Lisää uusi monivalintakysymys:</h3>
-    <form action="/add_multiquestion" method="post">
-    <p>Uusi kysymys: <input type="text" name="multiquestion" required minlength="1" required maxlength ="500"></p>
-    <p>Vaihtoehto 1: <input type="text" name="choice1" required minlength="1" required maxlength ="500"></p>
-    <p>Vaihtoehto 2: <input type="text" name="choice2" required minlength="1" required maxlength ="500"></p>
-    <p>Vaihtoehto 3: <input type="text" name="choice3" required minlength="1" required maxlength ="500""></p>
-    <p>Oikea vastaus:</p>
-    <input type="radio" name="multianswer" value=1>Vaihtoehto 1
-    <input type="radio" name="multianswer" value=2>Vaihtoehto 2
-    <input type="radio" name="multianswer" value=3>Vaihtoehto 3
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <p><input type="submit" value="Tallenna"></p>
-    </form>
-    {% endif %}
-</section>
+  </div>
+    <section>
+        <h3>Kurssimateriaali</h3>
+        {% if session.admin %}
+        <form action="/add_textmaterial" method="post">
+          <div class="form-group">
+            <textarea class="form-control" name="textmaterial" rows=6 required minlength="1" required maxlength ="20000">{{ textmaterial.textmaterial }}</textarea>
+          </div>
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Tallenna</button>
+          </div>
+        </form>
+        {% else %}
+        <article>
+            {{ textmaterial.textmaterial }}
+        </article>
+        {% endif %}
+    </section>
+    <section>
+        <h3>Kysymykset</h3>
+        {% if session.admin %}
+        {% for textquestion in textquestions%}
+        <p><b>K:</b> {{ textquestion.question}} <b>V:</b> {{ textquestion.answer}}</p>
+        <form action="/delete_textquestion" method="post">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <button type="submit" name="question_id" value="{{ textquestion.id }}">Poista</button>
+        </form>
+        {% endfor %}
+        {% else %}
+        {% if user_in_course %}
+        {% for textquestion in textquestions%}
+        <p>{{ textquestion.question}}</p> 
+        <form action="/answer_textquestion" method="post">
+        <input type="text" name="textanswer" required minlength="1" required maxlength ="500">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <button type="submit" name="question_id" value="{{ textquestion.id }}">Vastaa</button>
+        </form>
+        {% endfor %}
+        {% if course_stats.questions %}
+        <p><b>Pisteet: {{ course_stats.correct }}/{{ course_stats.questions }}</b></p>
+        {% endif %}
+        {% for multiquestion in multiquestions%}
+        {% if session.admin %}
+        <p><b>K:</b> {{ multiquestion.question}} <b>1:</b> {{ multiquestion.choice1}}
+            <b>2:</b> {{ multiquestion.choice2}} <b>3:</b> {{ multiquestion.choice3}}
+            <b>V:</b> {{ multiquestion.answer}}</p>
+        <form action="/delete_multiquestion" method="post">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <button type="submit" name="question_id" value="{{ multiquestion.id }}">Poista</button>
+        </form>
+        {% else %}
+        <p>{{ multiquestion.question}}</p> 
+        <form action="/answer_multiquestion" method="post">
+        <input type="radio" name="answer" value=1>{{ multiquestion.choice1 }}
+        <input type="radio" name="answer" value=2>{{ multiquestion.choice2 }}
+        <input type="radio" name="answer" value=3>{{ multiquestion.choice3 }}
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <button type="submit" name="question_id" value="{{ multiquestion.id }}">Vastaa</button>
+        </form>
+        {% endif %}
+        {% endfor %}
+        {% if not session.admin %}
+        {% if course_multi_stats.questions %}
+        <p><b>Pisteet: {{ course_multi_stats.correct }}/{{ course_multi_stats.questions }}</b></p>
+        {% endif %}
+        {% endif %}
+        {% else %}
+        Liity kurssille nähdäksesi kysymykset
+        {% endif %}
+        {% endif %}
+    </section>
+    <section>
+        {% if session.admin %}
+        <h3>Lisää uusi tekstikysymys:</h3>
+        <form action="/add_textquestion" method="post">
+        <p>Uusi kysymys: <input type="text" name="textquestion" required minlength="1" required maxlength ="500"></p>
+        <p>Oikea vastaus: <input type="text" name="textanswer" required minlength="1" required maxlength ="500"></p>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <input type="submit" value="Tallenna">
+        </form>
+        <h3>Lisää uusi monivalintakysymys:</h3>
+        <form action="/add_multiquestion" method="post">
+        <p>Uusi kysymys: <input type="text" name="multiquestion" required minlength="1" required maxlength ="500"></p>
+        <p>Vaihtoehto 1: <input type="text" name="choice1" required minlength="1" required maxlength ="500"></p>
+        <p>Vaihtoehto 2: <input type="text" name="choice2" required minlength="1" required maxlength ="500"></p>
+        <p>Vaihtoehto 3: <input type="text" name="choice3" required minlength="1" required maxlength ="500""></p>
+        <p>Oikea vastaus:</p>
+        <input type="radio" name="multianswer" value=1>Vaihtoehto 1
+        <input type="radio" name="multianswer" value=2>Vaihtoehto 2
+        <input type="radio" name="multianswer" value=3>Vaihtoehto 3
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <p><input type="submit" value="Tallenna"></p>
+        </form>
+        {% endif %}
+    </section>
 {% endblock %}
