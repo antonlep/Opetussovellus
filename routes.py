@@ -31,17 +31,24 @@ def course_pages(course_id):
 def course_statistics(course_id):
     course=courses.get_course(course_id)
     participants=courses.get_course_participants(course_id)
+    textpoints = len(questions.get_active_textquestions(course_id))
+    multipoints = len(questions.get_active_textquestions(course_id))
+    all_points = textpoints + multipoints
     points = {}
     for i in participants:
-        course_stats = questions.get_statistics_for_one_course(i[0], course_id).values()
-        points[i[1]] = course_stats[2:4]
+        stats = questions.get_statistics_for_one_course(i[0], course_id)
+        if stats:
+            course_stats = stats.values()
+            points[i[1]] = course_stats[2:4]
     for j in participants:
-        course_stats = questions.get_multistatistics_for_one_course(j[0], course_id).values()
-        if j[1] not in points:
-            points[j[1]] = course_stats[2:4]
-        else:
-            points[j[1]][0] += course_stats[2]
-            points[j[1]][1] += course_stats[3]
+        stats = questions.get_multistatistics_for_one_course(j[0], course_id)
+        if stats:
+            course_stats = stats.values()
+            if j[1] not in points:
+                points[j[1]] = course_stats[2:4]
+            else:
+                points[j[1]][0] += course_stats[2]
+                points[j[1]][1] += course_stats[3]
     if course:
         return render_template(
             "course_statistics.html",
