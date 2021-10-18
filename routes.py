@@ -34,7 +34,6 @@ def course_statistics(course_id):
     points = {}
     for i in participants:
         course_stats = questions.get_statistics_for_one_course(i[0], course_id).values()
-        print(i[1], course_stats)
         points[i[1]] = course_stats[2:4]
     for j in participants:
         course_stats = questions.get_multistatistics_for_one_course(j[0], course_id).values()
@@ -88,7 +87,6 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         teacher = request.form.getlist("teacher")
-        print(username, password1, password2, teacher)
         if (not users.valid_input(username) or not users.valid_input(password1)
             or not users.valid_input(password2)):
             return render_template("register.html", message="Käyttäjätunnus tai salasana ei kelpaa")
