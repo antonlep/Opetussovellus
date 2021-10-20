@@ -15,11 +15,11 @@
   </ul>
 </nav>
 <section>
-    <h3>Kurssin opiskelijat ja pisteet</h3>
+    <h3 class="header mt-3">Kurssin opiskelijat ja pisteet</h3>
     {% if session.admin %}
-    <ul>
+    <ul class="list-group list-group-flush">
         {% for key, value in participant_points.items() %}
-        <li><b>{{ key }}</b> {{ value[0] }}/{{ value[1] }}</li>
+        <li class="list-group-item"><b>{{ key }}:</b> {{ value[0] }}/{{ value[1] }}</li>
         {% endfor %}
     </ul>
     {% endif %}
