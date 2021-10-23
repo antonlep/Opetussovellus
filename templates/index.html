@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Aloitussivu{% endblock %}
 {% block content %}
-<nav>
   <div class="list-group">
+    <nav>
       {% if session.user_id %} 
       {% if session.admin %}
       {% for k, v in statistics.items() %}
@@ -31,6 +31,7 @@
       </a>
       {% endfor %}
       {% endif %}
+    </nav>
   </div>
   {% if session.admin %}
   <div class = "col-md-4 mt-4">
@@ -44,6 +45,5 @@
     </form>
   </div>
   {% endif %}
-</nav>
 <p style="color:red;">{{ message }}</p>
 {% endblock %}
