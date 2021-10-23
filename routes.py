@@ -8,7 +8,7 @@ import questions
 def index():
     user_id = users.user_id()
     course_list = courses.get_active_courses()
-    return render_template("index.html", user = user_id, courses=course_list,
+    return render_template("index.html", courses=course_list,
                            statistics=questions.get_statistics_for_all_courses(user_id))
 
 @app.route("/courses/<int:course_id>")
@@ -203,7 +203,7 @@ def statistics():
     return render_template("statistics.html",
                            courses = questions.get_statistics_for_all_courses(user_id))
 
-@app.route("/logout", methods=["GET"])
+@app.route("/logout")
 def logout():
     users.logout()
     return redirect("/")
