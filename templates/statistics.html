@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Pistetaulukko{% endblock %}
 {% block content %}
+{% if session.user_id %}
 <h1>Pistetaulukko</h1>
 <section>
     <ul>
@@ -9,4 +10,5 @@
         {% endfor %}
     </ul>
 </section>
+{% endif %}
 {% endblock %}

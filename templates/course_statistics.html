@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Tilastot | {{ course.name }}{% endblock %}
 {% block content %}
+{% if session.user_id %}
 <div class="d-flex justify-content-center">
     <h1>{{ course.name }}</h1>
 </div>
@@ -28,4 +29,5 @@
     {% endif %}
     <p style="color:red;">{{ message }}</p>
 </section>
+{% endif %}
 {% endblock %}

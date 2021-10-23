@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}{{ course.name }}{% endblock %}
 {% block content %}
+{% if session.user_id %}
 <div class="d-flex justify-content-center">
   <h1>{{ course.name }}</h1>
 </div>
@@ -222,5 +223,6 @@
     </div>
   </form>
 </section>
+{% endif %}
 {% endif %}
 {% endblock %}
