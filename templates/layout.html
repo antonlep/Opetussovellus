@@ -11,32 +11,30 @@
                 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                     <a class="navbar-brand" href="/">Opetussovellus</a>
                     {% if session.user_id %}
-                    <ul class="navbar-nav mx-auto">
+                    <div class="navbar-nav mx-auto">
                         <span class="navbar-text">
                             {{ session.username }} {% if session.admin %} [Opettaja] {% else %} [Opiskelija] {% endif %}
                         </span>
-                    </ul>
+                    </div>
                     <a class ="btn btn-outline-light" href="/logout">Kirjaudu ulos</a>
                     {% else %}
-                    <ul class="navbar-nav mx-auto">
+                    <div class="navbar-nav mx-auto">
                         <span class="navbar-text">
                             Kirjaudu sisään nähdäksesi kurssien sisällön.
                         </span>
-                    </ul>
+                    </div>
                     <a class ="btn btn-outline-light" href="/login">Kirjaudu sisään</a>
                     <a class ="btn btn-outline-light" href="/register">Rekisteröidy</a>
                     {% endif %}
                 </nav>
             </div>
         </header>
-        <section>
-            <div class="container-lg">
-                <div class="row">
-                    <div class="col-lg">
-                        {% block content %}{% endblock %}
-                    </div>
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-lg">
+                    {% block content %}{% endblock %}
                 </div>
             </div>
-        </section>
+        </div>
     </body>
 </html>

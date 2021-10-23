@@ -31,9 +31,6 @@ def course_pages(course_id):
 def course_statistics(course_id):
     course=courses.get_course(course_id)
     participants=courses.get_course_participants(course_id)
-    textpoints = len(questions.get_active_textquestions(course_id))
-    multipoints = len(questions.get_active_textquestions(course_id))
-    all_points = textpoints + multipoints
     points = {}
     for i in participants:
         stats = questions.get_statistics_for_one_course(i[0], course_id)

@@ -16,14 +16,14 @@
       <a href="/courses/{{ k }}" class="list-group-item list-group-item-action flex-column align-items-start active bg-light">
         <div class="d-flex w-100 justify-content-between ">
           <h2 class="text-dark">{{ v[2] }}</h2>
-          <medium class="text-dark">{{ v[0] }}/{{ v[1] }} pistettä</medium>
+          <aside class="text-dark">{{ v[0] }}/{{ v[1] }} pistettä</aside>
         </div>
       </a>
       {% endfor %}
       {% endif %}
       {% else %}
       {% for course in courses %}
-      <a href="{{ course.name }}" class="list-group-item list-group-item-action disabled flex-column align-items-start active bg-light">
+      <a href="#" class="list-group-item list-group-item-action disabled flex-column align-items-start active bg-light">
         <div class="d-flex w-100 justify-content-between ">
           <h2 class="text-dark">{{ course.name }}</h2>
         </div>
@@ -32,18 +32,16 @@
       {% endif %}
   </div>
   {% if session.admin %}
-  <p>
-  <div class = "col-md-4">
+  <div class = "col-md-4 mt-4">
     <form action="/add_course" method="post">
       <div class="form-group">
-        <labe>Lisää kurssi</labe>
-        <input type="text" class="form-control name="course_name" required minlength="1" required maxlength ="50">
+        <label>Lisää kurssi</label>
+        <input type="text" class="form-control" name="course_name" required minlength="1" maxlength ="50">
       </div>
       <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
       <button type="submit" class="btn btn-primary">Lisää</button>
     </form>
   </div>
-  </p>
   {% endif %}
   <p style="color:red;">{{ message }}</p>
 {% endblock %}
