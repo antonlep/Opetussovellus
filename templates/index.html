@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Aloitussivu{% endblock %}
 {% block content %}
+<nav>
   <div class="list-group">
       {% if session.user_id %} 
       {% if session.admin %}
@@ -43,5 +44,6 @@
     </form>
   </div>
   {% endif %}
-  <p style="color:red;">{{ message }}</p>
+</nav>
+<p style="color:red;">{{ message }}</p>
 {% endblock %}
