@@ -203,7 +203,7 @@ def statistics():
     return render_template("statistics.html",
                            courses = questions.get_statistics_for_all_courses(user_id))
 
-@app.route("/logout")
+@app.route("/logout", methods=["GET"])
 def logout():
     users.logout()
     return redirect("/")
