@@ -13,9 +13,9 @@ def index():
 
 @app.route("/courses/<int:course_id>")
 def course_pages(course_id):
-    user_id = session["user_id"]
-    course=courses.get_course(course_id)
-    if user_id:
+    if session["user_id"]:
+        user_id = session["user_id"]
+        course=courses.get_course(course_id)
         if course:
             return render_template(
                 "course.html",
@@ -31,10 +31,10 @@ def course_pages(course_id):
 
 @app.route("/courses/<int:course_id>/statistics")
 def course_statistics(course_id):
-    course=courses.get_course(course_id)
-    participants=courses.get_course_participants(course_id)
-    points = {}
     if session["user_id"]:
+        course=courses.get_course(course_id)
+        participants=courses.get_course_participants(course_id)
+        points = {}
         for i in participants:
             stats = questions.get_statistics_for_one_course(i[0], course_id)
             if stats:
