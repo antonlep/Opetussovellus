@@ -3,7 +3,7 @@
 {% block content %}
   <div class="list-group">
     <nav>
-      {% if session.user_id %} 
+      {% if user %} 
       {% if session.admin %}
       {% for k, v in statistics.items() %}
       <a href="/courses/{{ k }}" class="list-group-item list-group-item-action flex-column align-items-start active bg-light">
