@@ -15,43 +15,47 @@ def index():
 def course_pages(course_id):
     user_id = session["user_id"]
     course=courses.get_course(course_id)
-    if course:
-        return render_template(
-            "course.html",
-            course=course,
-            textmaterial=courses.get_latest_textmaterial(course_id),
-            textquestions=questions.get_active_textquestions(course_id),
-            multiquestions=questions.get_active_multiquestions(course_id),
-            course_stats=questions.get_statistics_for_one_course(user_id, course_id),
-            course_multi_stats=questions.get_multistatistics_for_one_course(user_id, course_id),
-            user_in_course=courses.check_if_user_in_course(user_id, course_id))
-    return render_template("error.html", message="Kurssia ei löydy")
+    if user_id:
+        if course:
+            return render_template(
+                "course.html",
+                course=course,
+                textmaterial=courses.get_latest_textmaterial(course_id),
+                textquestions=questions.get_active_textquestions(course_id),
+                multiquestions=questions.get_active_multiquestions(course_id),
+                course_stats=questions.get_statistics_for_one_course(user_id, course_id),
+                course_multi_stats=questions.get_multistatistics_for_one_course(user_id, course_id),
+                user_in_course=courses.check_if_user_in_course(user_id, course_id))
+        return render_template("error.html", message="Kurssia ei löydy")
+    return redirect("/")
 
 @app.route("/courses/<int:course_id>/statistics")
 def course_statistics(course_id):
     course=courses.get_course(course_id)
     participants=courses.get_course_participants(course_id)
     points = {}
-    for i in participants:
-        stats = questions.get_statistics_for_one_course(i[0], course_id)
-        if stats:
-            course_stats = stats.values()
-            points[i[1]] = course_stats[2:4]
-    for j in participants:
-        stats = questions.get_multistatistics_for_one_course(j[0], course_id)
-        if stats:
-            course_stats = stats.values()
-            if j[1] not in points:
-                points[j[1]] = course_stats[2:4]
-            else:
-                points[j[1]][0] += course_stats[2]
-                points[j[1]][1] += course_stats[3]
-    if course:
-        return render_template(
-            "course_statistics.html",
-            course=course,
-            participant_points=points)
-    return render_template("error.html", message="Kurssia ei löydy")
+    if session["user_id"]:
+        for i in participants:
+            stats = questions.get_statistics_for_one_course(i[0], course_id)
+            if stats:
+                course_stats = stats.values()
+                points[i[1]] = course_stats[2:4]
+        for j in participants:
+            stats = questions.get_multistatistics_for_one_course(j[0], course_id)
+            if stats:
+                course_stats = stats.values()
+                if j[1] not in points:
+                    points[j[1]] = course_stats[2:4]
+                else:
+                    points[j[1]][0] += course_stats[2]
+                    points[j[1]][1] += course_stats[3]
+        if course:
+            return render_template(
+                "course_statistics.html",
+                course=course,
+                participant_points=points)
+        return render_template("error.html", message="Kurssia ei löydy")
+    return redirect("/")
 
 @app.route("/join_course")
 def join_course():
