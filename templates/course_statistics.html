@@ -1,19 +1,22 @@
 {% extends "layout.html" %}
 {% block title %}Tilastot | {{ course.name }}{% endblock %}
 {% block content %}
-<h1 class="text-center">{{ course.name }}</h1>
-<nav class="text-center">
-    {% if session.admin %}
-      <a class="btn btn-outline-primary" href="/courses/{{ course.id }}" role="button">Kurssisivu</a>
-      <a class="btn btn-outline-primary" href="/courses/{{ course.id }}/statistics" role="button">Kurssin tilastot</a>
-      <a class="btn btn-outline-danger" href="/delete_course" role="button">Poista kurssi</a>
-    {% elif user_in_course %}
-    <a class="btn btn-outline-primary" href="/remove_from_course" role="button">Poistu kurssilta</a>
-    {% else %}
-    <a class="btn btn-outline-primary" href="/join_course" role="button">Liity kurssille</a>
-    {% endif %}
-  </ul>
-</nav>
+<div class="d-flex justify-content-center">
+    <h1>{{ course.name }}</h1>
+</div>
+<div class="d-flex justify-content-center">
+    <nav>
+        {% if session.admin %}
+        <a class="btn btn-outline-primary" href="/courses/{{ course.id }}" role="button">Kurssisivu</a>
+        <a class="btn btn-outline-primary" href="/courses/{{ course.id }}/statistics" role="button">Kurssin tilastot</a>
+        <a class="btn btn-outline-danger" href="/delete_course" role="button">Poista kurssi</a>
+        {% elif user_in_course %}
+        <a class="btn btn-outline-primary" href="/remove_from_course" role="button">Poistu kurssilta</a>
+        {% else %}
+        <a class="btn btn-outline-primary" href="/join_course" role="button">Liity kurssille</a>
+        {% endif %}
+    </nav>
+</div>
 <section>
     <h3 class="header mt-3">Kurssin opiskelijat ja pisteet</h3>
     {% if session.admin %}
