@@ -7,7 +7,9 @@ Sovelluksen rakenne:
 Etusivu:
 
 -Lista kursseista\
--Kirjautuneena käyttäjänä voi klikata kursssille sisään
+-Kirjautuneena käyttäjänä voi klikata kursssille sisään\
+-Kurssin nimen yhteydessä näkyy käyttäjän pisteet kurssilla\
+-Opettajana voi lisätä uuden kurssin
 
 
 Rekisteröityminen:
@@ -21,9 +23,9 @@ Kurssisivut:
 -Tekstikenttä kurssimateriaalia varten\
 -Lista kysymyksiä\
 -Kysymyksiin voi vastata vain yksi kerrallaan\
--Kysymysten alla näkyy pistetilanne\
--Opiskelija voi liittyä tai poistua kurssille\
--Opettaja voi lisätä kurssimateriaalia kirjoittamalla uusi materiaali kenttään ja tallentamalla\
+-Kysymysten alla näkyy pistetilanne, erikseen tekstikysymyksille ja monivalintakysymyksille\
+-Opiskelija voi liittyä kurssille tai poistua kurssilta\
+-Opettaja voi lisätä ja muokata kurssimateriaalia kirjoittamalla kenttään ja tallentamalla\
 -Opettaja voi lisätä ja poistaa kysymyksiä\
 -Opettaja voi poistaa kurssin\
 
@@ -31,15 +33,4 @@ Kurssin tilastot:
 
 -Opettaja näkee kurssille liittyneet opiskelijat ja heidän pisteensä
 
-
-Pistetaulukko:
-
--Lista kursseista ja pisteistä yksittäiselle opiskelijalle
-
-
-Puuttuvia asioita:
-
--Käyttöjärjestelmän ulkoasun viimeistely\
--Virheilmoituksen näyttö jos CRSF tunnistus ei onnistu\
--Oikean vastauksen korostus esim. värillä
 
